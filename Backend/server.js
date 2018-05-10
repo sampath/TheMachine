@@ -1,4 +1,9 @@
 /* Base Setup */
-var express = require('express'),
-        app = express(),
-        firebase = require("firebase");
+var express = require('express');
+var firebase = require("firebase");
+var bodyParser = require('body-parser');
+
+/* connect to firebase project here */
+
+var app = express();
+
