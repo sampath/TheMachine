@@ -10,6 +10,7 @@ var config = {
   databaseURL: "https://flick-b0e2c.firebaseio.com",
   storageBucket: "flick-b0e2c.appspot.com",
 };
+
 firebase.initializeApp(config);
 
 var app = express();
