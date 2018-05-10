@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies" :{
-  	"express":"*",
-  	"body-parser":"*",
-  	"firebase":"*"
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "firebase": "^5.0.1"
   },
   "author": "",
   "license": "ISC"
