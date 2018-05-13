@@ -8,3 +8,8 @@ install:
 
 script:
   - npm test
+
+deploy:
+  provider: heroku
+  api_key: b7fa582d-233c-4ef1-945b-ca2eb67727d4
+  app: flick-staging
