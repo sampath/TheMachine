@@ -14,4 +14,3 @@ var config = {
 firebase.initializeApp(config);
 
 var app = express();
-
