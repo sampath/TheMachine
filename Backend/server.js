@@ -4,8 +4,8 @@ var firebase = require('firebase');
 var bodyParser = require('body-parser');
 
 /* Get Route Handlers */
-import {getUsers, getUser, newUser, updateUser, deleteUser} from "./js/users.js";
-import {getListings, getListing, newListing, updateListing, deleteListing} from "./js/listings.js";
+var users = require('./users.js');
+var listings = require('./listings.js');
 
 /* connect to firebase project here */
 var config = {
@@ -28,25 +28,25 @@ router.get('/', function(req, res) {
 
 // User requests
 router.route('/users')
-    .get(getUsers)
-    .post(newUser);
+    .get(users.getUsers)
+    .post(users.newUser);
 router.route('/users/:id')
-    .get(getUser)
-    .patch(updateUser)
-    .delete(deleteUser);
+    .get(users.getUser)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
 
 // Listing requests
 router.route('/listings')
-    .get(getListings)
-    .post(newListing);
+    .get(listings.getListings)
+    .post(listings.newListing);
 router.route('listings/:id')
-    .get(getListing)
-    .patch(updateListing)
-    .delete(deleteListing);
+    .get(listings.getListing)
+    .patch(listings.updateListing)
+    .delete(listings.deleteListing);
 
 app.use('/', router);
 
-export default {db}
+module.exports = {app, db};
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
