@@ -3,15 +3,37 @@ import db from "../server.js"
 var listingsRef = db.ref("listings");
 
 function getListings(req, res) {
-    res.json();
+    listingsRef.once("value", (snapshot, prevChildKey) => {
+        res.json(snapshot.val())
+    });
 }
 
 function getListing(req, res) {
-    res.json();
+    let id = req.params.id;
+    listingsRef.child(id).once("value", function(snapshot) {
+        if(snapshot.val() == null) {
+            res.send("User id error");
+        } else {
+            res.json(snapshot.val())
+        }
+    });
 }
 
 function newListing(req, res) {
-    res.json();
+    listingsRef.push({
+        itemName: req.body.itemName,
+        tags: req.body.tags,
+        ownerID: ????,
+        price: req.body.price,
+        availability: 1,
+        endTime: req.body.endTime,
+        pictureURL: ????,
+        description: req.body.description
+    }, function(err) {
+        if(err){
+            res.send(err)
+        }
+    });
 }
 
 function updateListing(req, res) {
@@ -19,7 +41,14 @@ function updateListing(req, res) {
 }
 
 function deleteListing(req, res) {
-    res.json();
+    let id = req.params.id;
+    listingsRef.child(id).remove(function(err) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.json();
+        }
+    });
 }
 
-export {getListings, getListing, newListing, updateListing, deleteListing}
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing}

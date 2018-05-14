@@ -6,11 +6,17 @@ function getUsers(req, res) {
     usersRef.once("value", (snapshot, prevChildKey) => {
         res.json(snapshot.val())
     });
-    res.json();
 }
 
 function getUser(req, res) {
-    res.json();
+    let id = req.params.id;
+    usersRef.child(id).once("value", function(snapshot) {
+        if(snapshot.val() == null) {
+            res.send("User id error");
+        } else {
+            res.json(snapshot.val())
+        }
+    });
 }
 
 function newUser(req, res) {
@@ -25,15 +31,20 @@ function newUser(req, res) {
             res.send(err)
         }
     });
-    res.json();
 }
 
-function updateUser(req, res) {
-    res.json();
-}
+function updateUser(req, res) {}
+
 
 function deleteUser(req, res) {
-    res.json();
+    let id = req.params.id;
+    usersRef.child(id).remove(function(err) {
+        if(err) {
+            res.send(err);
+        } else {
+            res.json();
+        }
+    });
 }
 
-export {getUsers, getUser, newUser, updateUser, deleteUser}
+modules.exports = {getUsers, getUser, newUser, updateUser, deleteUser};
