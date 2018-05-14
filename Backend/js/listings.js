@@ -23,11 +23,11 @@ function newListing(req, res) {
     listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
-        ownerID: ????,
+        ownerID: '?',
         price: req.body.price,
         availability: 1,
         endTime: req.body.endTime,
-        pictureURL: ????,
+        pictureURL: '?',
         description: req.body.description
     }, function(err) {
         if(err){
