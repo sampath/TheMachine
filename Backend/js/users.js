@@ -1,6 +1,6 @@
-import db from "../server.js";
-
-var usersRef = db.ref("users");
+//import db from "../server.js";
+var server = require('../server');
+var usersRef = server.db.ref("users");
 
 function getUsers(req, res) {
     usersRef.once("value", (snapshot, prevChildKey) => {

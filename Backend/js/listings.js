@@ -1,6 +1,7 @@
-import db from "../server.js"
+//import db from "../server.js"
+var server = require('../server.js');
 
-var listingsRef = db.ref("listings");
+var listingsRef = server.db.ref("listings");
 
 function getListings(req, res) {
     listingsRef.once("value", (snapshot, prevChildKey) => {

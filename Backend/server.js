@@ -3,28 +3,39 @@ var express = require('express');
 var firebase = require('firebase');
 var bodyParser = require('body-parser');
 
+/* Admin SDK Setup */
+var admin = require('firebase-admin');
+
+var serviceAccount = require('./credentials.json');
+
+admin.initializeApp({
+	  credential: admin.credential.cert(serviceAccount),
+	  databaseURL: "https://flick-b0e2c.firebaseio.com"
+});
+console.log("Admin SDK setup complete");
+
 /* Get Route Handlers */
-var users = require('./users.js');
-var listings = require('./listings.js');
-
-/* connect to firebase project here */
-var config = {
-  apiKey: "AIzaSyAa7xJzMvvYSZbBbfaTb3-k4eSBqzAYYsI",
-  authDomain: "flick-b0e2c.firebaseapp.com",
-  databaseURL: "https://flick-b0e2c.firebaseio.com",
-  storageBucket: "flick-b0e2c.appspot.com",
-};
-
-firebase.initializeApp(config);
-var db = firebase.database();
-
 var app = express();
-
+var db = admin.database();
 var router = express.Router();
+
+app.use('/', router);
+
+module.exports= {
+	app: app,
+	db: db
+};
+var users = require('./js/users.js');
+var listings = require('./js/listings.js');
+console.log("Get route handlers");
 
 router.get('/', function(req, res) {
 
 });
+
+// Set up bodyParser
+var bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({extended:true}));
 
 // User requests
 router.route('/users')
@@ -44,9 +55,17 @@ router.route('listings/:id')
     .patch(listings.updateListing)
     .delete(listings.deleteListing);
 
-app.use('/', router);
-
-module.exports = {app, db};
+// Test routing
+// Go to localhost:3000/test 
+router.route('/test')
+    .get(function(req,res,next){
+      res.sendFile(__dirname+'/tester.html');
+    })
+    .post(users.newUser);
+router.route('/test/id')
+    .get(users.getUser)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
