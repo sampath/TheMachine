@@ -3,11 +3,12 @@ language: node_js
 node_js:
   - stable
 
-install:
-  - npm install
+cache:
+  - node_modules
 
 script:
   - npm test
+  - npm run build
 
 deploy:
   provider: heroku
