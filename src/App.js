@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
@@ -8,8 +10,9 @@ import Routes from "./Routes";
 class App extends Component {
 render() {
   return (
+    <Router>
     <div className="App container">
-      <Navbar fluid collapseOnSelect>
+        <Navbar fluid collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <Link to="/">flick</Link>
@@ -29,6 +32,7 @@ render() {
       </Navbar>
       <Routes />
     </div>
+    </Router>
   );
 }
 }
