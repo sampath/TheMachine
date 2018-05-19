@@ -34,12 +34,12 @@ function newUser(req, res) {
 }
 
 function updateUser(req, res) {
-    usersRef.update({
-        name: req.body.name,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber
-
-    }, function(err) {
+    let id = req.params.id;
+    let user = {};
+    req.body.keys.forEach((param) => {
+        user[param] = req.body[param];
+    });
+    usersRef.child(id).update(user, function(err) {
         if(err) {
             res.send(err)
         }

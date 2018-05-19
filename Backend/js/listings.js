@@ -4,14 +4,31 @@ var server = require('../server.js');
 var listingsRef = server.db.ref("listings");
 
 function getListings(req, res) {
-    listingsRef.once("value", (snapshot, prevChildKey) => {
-        res.json(snapshot.val())
+    let queryRef = listingsRef.orderByChild(req.query.orderBy) // add default key to order by
+        .startAt(req.query.minVal || 0)
+        .endAt(req.query.maxVal || 1000000);
+    if (req.query.onlyAvailable) {
+        queryRef = queryRef.equalTo(1, 'availability')
+    }
+    queryRef.once("value",(snapshot, prevChildKey) => {
+        let index = 0;
+        let listingArray = snapshot.val();
+        snapshot.val().forEach(listing => {
+
+            if (!listing.child('tags').some(t => req.query.searchWords.includes(t))) {
+                listingArray = listingArray.splice(index, 1);
+                index--;
+            }
+
+            index++;
+        });
+        res.json(listingArray);
     });
 }
 
 function getListing(req, res) {
     let id = req.params.id;
-    listingsRef.child(id).once("value", function(snapshot) {
+    listingsRef.child(id).once("value", snapshot => {
         if(snapshot.val() == null) {
             res.send("User id error");
         } else {
@@ -30,7 +47,7 @@ function newListing(req, res) {
         endTime: req.body.endTime,
         pictureURL: '?',
         description: req.body.description
-    }, function(err) {
+    }, err => {
         if(err){
             res.send(err)
         }
@@ -38,12 +55,22 @@ function newListing(req, res) {
 }
 
 function updateListing(req, res) {
+    let id = req.params.id;
+    let listing = {};
+    req.body.keys.forEach((param) => {
+        listing[param] = req.body[param];
+    });
+    listingsRef.child(id).update(listing, function(err) {
+        if(err) {
+            res.send(err)
+        }
+    });
     res.json();
 }
 
 function deleteListing(req, res) {
     let id = req.params.id;
-    listingsRef.child(id).remove(function(err) {
+    listingsRef.child(id).remove(err => {
         if(err) {
             res.send(err);
         } else {
@@ -52,4 +79,4 @@ function deleteListing(req, res) {
     });
 }
 
-module.exports = {getListings, getListing, newListing, updateListing, deleteListing}
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing};
