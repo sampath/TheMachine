@@ -20,8 +20,32 @@ function getUser(req, res) {
 }
 
 function newUser(req, res) {
+
+
+    var token;
+    var user;
+
+    // Set up Google provider object
+    var provider = server.admin.auth.GoogleAuthProvider();
+    server.admin.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Google Access Token. You can use it to access the Google API.
+        token = result.credential.accessToken;
+    	// The signed-in user info.
+  	user = result.user;
+  	// ...
+    }).catch(function(error) {
+  	// Handle Errors here.
+  	var errorCode = error.code;
+  	var errorMessage = error.message;
+  	// The email of the user's account used.
+  	var email = error.email;
+  	// The firebase.auth.AuthCredential type that was used.
+  	var credential = error.credential;
+  	// ...
+    });
+
     usersRef.push({
-        name: req.body.name,
+        name: user,//req.body.name,
         registrationDate: Date.now(),
         email: req.body.email,
         phoneNumber: req.body.phoneNumber

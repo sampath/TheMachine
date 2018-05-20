@@ -1,6 +1,6 @@
 /* Base Setup */
 var express = require('express');
-var firebase = require('firebase');
+//var firebase = require('firebase');
 var bodyParser = require('body-parser');
 
 /* Admin SDK Setup */
@@ -23,7 +23,8 @@ app.use('/', router);
 
 module.exports= {
 	app: app,
-	db: db
+	db: db,
+	admin: admin
 };
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
