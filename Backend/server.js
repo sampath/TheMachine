@@ -30,7 +30,11 @@ var db = admin.database();
 var router = express.Router();
 
 app.use('/', router);
-
+module.exports= {
+	app: app,
+    db: db,
+	admin: admin
+};
 
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
@@ -87,9 +91,3 @@ router.route('/test/id')
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
 });
-
-module.exports= {
-	app: app,
-	db: db,
-	admin: admin
-};

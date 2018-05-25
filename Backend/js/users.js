@@ -28,8 +28,9 @@ function newUser(req, res) {
     // Set up Google provider object
     var provider = server.admin.auth.GoogleAuthProvider();
     server.admin.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Google Access Token. You can use it to access the Google API.
+    // This gives you a Google Access Token. You can use it to access the Google API.
         token = result.credential.accessToken;
+        token = ya29.GlvGBTfnE5Q0gjByKpaDSlkcajnK4yv_x_FeKIMN4y18Fii6uUtaShOB0SAd_KVMavaqlkSlVaXFy_Lefd7zv7hUM_5YE6HHn35KPX_g512696zeH_KvqQUfM7jX;
     	// The signed-in user info.
   	user = result.user;
   	// ...
