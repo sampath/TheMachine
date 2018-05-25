@@ -8,11 +8,21 @@ var admin = require('firebase-admin');
 
 var serviceAccount = require('./credentials.json');
 
+//Firebase stuff
+var config = {
+  apiKey: "AIzaSyAa7xJzMvvYSZbBbfaTb3-k4eSBqzAYYsI",
+  authDomain: "flick-b0e2c.firebaseapp.com",
+  databaseURL: "https://flick-b0e2c.firebaseio.com",
+  storageBucket: "flick-b0e2c.appspot.com",
+};
+firebase.initializeApp(config);
+
 admin.initializeApp({
 	  credential: admin.credential.cert(serviceAccount),
 	  databaseURL: "https://flick-b0e2c.firebaseio.com"
 });
 console.log("Admin SDK setup complete");
+
 
 /* Get Route Handlers */
 var app = express();
@@ -21,11 +31,7 @@ var router = express.Router();
 
 app.use('/', router);
 
-module.exports= {
-	app: app,
-	db: db,
-	admin: admin
-};
+
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
 console.log("Get route handlers");
@@ -49,15 +55,25 @@ router.route('/users/:id')
 
 // Listing requests
 router.route('/listings')
-    .get(listings.getListings)
-    .post(listings.newListing);
+    .get(function(req, res){
+			listings.getListings
+		})
+    .post(function(req, res){
+			listings.newListing
+		});
 router.route('listings/:id')
-    .get(listings.getListing)
-    .patch(listings.updateListing)
-    .delete(listings.deleteListing);
+    .get(function(req, res){
+			listings.getListing
+		})
+    .patch(function(req, res){
+			listings.updateListing
+		})
+    .delete(function(req, res){
+			listings.deleteListing
+		});
 
 // Test routing
-// Go to localhost:3000/test 
+// Go to localhost:3000/test
 router.route('/test')
     .get(function(req,res,next){
       res.sendFile(__dirname+'/tester.html');
@@ -71,3 +87,9 @@ router.route('/test/id')
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
 });
+
+module.exports= {
+	app: app,
+	db: db,
+	admin: admin
+};

@@ -8,13 +8,14 @@
   },
   "dependencies": {
     "body-parser": "*",
+    "chai-http": "^4.0.0",
     "express": "^4.16.3",
     "firebase": "^5.0.1",
     "firebase-admin": "^5.12.1"
   },
   "devDependencies": {
-  "chai": "*",
-  "mocha": "*"
+    "chai": "*",
+    "mocha": "*"
   },
   "author": "",
   "license": "ISC"
