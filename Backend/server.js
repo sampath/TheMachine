@@ -23,7 +23,6 @@ admin.initializeApp({
 });
 console.log("Admin SDK setup complete");
 
-
 /* Get Route Handlers */
 var app = express();
 var db = admin.database();
