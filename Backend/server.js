@@ -8,7 +8,7 @@ var admin = require('firebase-admin');
 
 var serviceAccount = require('./credentials.json');
 
-//Firebase stuff
+//Firebase config
 var config = {
   apiKey: "AIzaSyAa7xJzMvvYSZbBbfaTb3-k4eSBqzAYYsI",
   authDomain: "flick-b0e2c.firebaseapp.com",
@@ -16,6 +16,9 @@ var config = {
   storageBucket: "flick-b0e2c.appspot.com",
 };
 firebase.initializeApp(config);
+
+// Storage reference
+var storage = firebase.storage().ref();
 
 admin.initializeApp({
 	  credential: admin.credential.cert(serviceAccount),
@@ -32,7 +35,7 @@ app.use('/', router);
 module.exports= {
 	app: app,
     db: db,
-	admin: admin
+    storage: storage
 };
 
 var users = require('./js/users.js');
@@ -86,6 +89,11 @@ router.route('/test/id')
     .get(users.getUser)
     .patch(users.updateUser)
     .delete(users.deleteUser);
+router.route('/test/listing')
+    .get(listings.getListing)
+    .patch(listings.updateListing)
+    .delete(listings.deleteListing)
+    .post(listings.newListing);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');

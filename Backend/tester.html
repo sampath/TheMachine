@@ -3,6 +3,8 @@
 		<h1>Testing Interface</h1>
 	</head>
 	<body>
+
+		<!-- User Test Forms -->
 	  	<h3>New User</h3>
 		<form id="newuserForm" name="newuserForm" method="POST" action="/test">
 		  <label for="name">Name</label>
@@ -27,6 +29,40 @@
 
 	  	<h3>Delete User</h3>
 		<form id="updateUserForm" name="updateUserForm" method="DELETE" action="/test/">
+		  <label for="id">ID</label>
+		  <input type="text" id="id" name="id"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+		<!-- Listing Test Forms -->
+		<h3>New Listing</h3>
+		<form id="newlistingForm" name="newlistingForm" method="POST" action="/test/listing">
+		  <label for="name">Item Name</label>
+			<input type="text" id="name" name="name"></br>
+			<label for="name">Tags</label>
+		  <input type="text" id="tags" name="tags"></br>
+		  <label for="name">Price</label>
+		  <input type="text" id="price" name="price"></br>
+		  <label for="name">Description</label>
+		  <input type="text" id="description" name="description"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+		<h3>Update Listing</h3>
+		<form id="updatelistingForm" name="updatelistingForm" method="PATCH" action="/test/listing">
+		  <label for="name">Item Name</label>
+			<input type="text" id="name" name="name"></br>
+			<label for="name">Tags</label>
+		  <input type="text" id="tags" name="tags"></br>
+		  <label for="name">Price</label>
+		  <input type="text" id="price" name="price"></br>
+		  <label for="name">Description</label>
+		  <input type="text" id="description" name="description"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+	  	<h3>Delete Listing</h3>
+		<form id="updatelistingForm" name="updatelistingForm" method="DELETE" action="/test/listing">
 		  <label for="id">ID</label>
 		  <input type="text" id="id" name="id"></br>
 		  <input type="submit" value="submit">
