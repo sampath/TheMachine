@@ -10,12 +10,16 @@ function getListings(req, res) {
     if (req.query.onlyAvailable) {
         queryRef = queryRef.equalTo(1, 'availability')
     }
+    // Search descriptions for keyword matches
     queryRef.once("value",(snapshot, prevChildKey) => {
         let index = 0;
         let listingArray = snapshot.val();
         snapshot.val().forEach(listing => {
-
-            if (!listing.child('tags').some(t => req.query.searchWords.includes(t))) {
+            // if we want to search tags
+            //let wordsToSearch = listing.child('tags')
+            let wordsToSearch = listing.child('description').split(' ');
+            wordsToSearch[wordsToSearch.length - 1] = wordsToSearch[description.length - 1].split('.')[0];
+            if (!wordsToSearch.some(t => req.query.searchWords.includes(t))) {
                 listingArray = listingArray.splice(index, 1);
                 index--;
             }

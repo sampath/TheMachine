@@ -3,13 +3,14 @@
 process.env.NODE_ENV = 'test';
 
 let firebase = require("firebase");
-let listings = require("../js/listings.js");
+let listings = require("../../js/listings.js");
 
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server').app;
+let server = require('../../server').app;
 let should = chai.should();
+let expect = chai.expect;
 
 //Test listing
 let listing = {
@@ -44,10 +45,10 @@ describe('Listings',() =>{
     chai.request(server)
         .get('/listings')
         .end((err, res) =>{
-            res.should.have.status(200);
-            res.body.should.be.a('array');
-            res.body.length.should.be.eql(1);
-            res.body[0].should.be.eql(listing);
+            expect(res).should.have.status(200);
+            expect(res.body).should.be.a('array');
+            expect(res.body.length).should.be.eql(1);
+            expect(res.body[0]).should.be.eql(listing);
         done();
         });
   });
