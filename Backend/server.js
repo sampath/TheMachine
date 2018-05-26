@@ -79,6 +79,16 @@ router.route('listings/:id')
 			listings.deleteListing
 		});
 
+// Ratings requests
+router.route('/ratings/:id')
+	  .get(function(req, res){
+			ratings.getRating
+		});
+router.route('/ratings')
+		.post(function(req, res){
+			ratings.newRating
+		});
+
 // Test routing
 // Go to localhost:3000/test
 router.route('/test')
