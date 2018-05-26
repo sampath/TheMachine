@@ -17,14 +17,15 @@ var config = {
 };
 firebase.initializeApp(config);
 
-// Storage reference
-var storage = firebase.storage().ref();
-
 admin.initializeApp({
 	  credential: admin.credential.cert(serviceAccount),
 	  databaseURL: "https://flick-b0e2c.firebaseio.com"
 });
 console.log("Admin SDK setup complete");
+
+
+// Storage reference
+//var storage = admin.storage().bucket();
 
 /* Get Route Handlers */
 var app = express();
@@ -35,7 +36,7 @@ app.use('/', router);
 module.exports= {
 	app: app,
     db: db,
-    storage: storage
+//    storage: storage
 };
 
 var users = require('./js/users.js');
