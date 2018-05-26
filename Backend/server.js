@@ -8,7 +8,7 @@ var admin = require('firebase-admin');
 
 var serviceAccount = require('./credentials.json');
 
-//Firebase stuff
+//Firebase config
 var config = {
   apiKey: "AIzaSyAa7xJzMvvYSZbBbfaTb3-k4eSBqzAYYsI",
   authDomain: "flick-b0e2c.firebaseapp.com",
@@ -23,6 +23,10 @@ admin.initializeApp({
 });
 console.log("Admin SDK setup complete");
 
+
+// Storage reference
+//var storage = admin.storage().bucket();
+
 /* Get Route Handlers */
 var app = express();
 var db = admin.database();
@@ -32,7 +36,7 @@ app.use('/', router);
 module.exports= {
 	app: app,
     db: db,
-	admin: admin
+//    storage: storage
 };
 
 var users = require('./js/users.js');
@@ -75,6 +79,16 @@ router.route('listings/:id')
 			listings.deleteListing
 		});
 
+// Ratings requests
+router.route('/ratings/:id')
+	  .get(function(req, res){
+			ratings.getRating
+		});
+router.route('/ratings')
+		.post(function(req, res){
+			ratings.newRating
+		});
+
 // Test routing
 // Go to localhost:3000/test
 router.route('/test')
@@ -86,6 +100,11 @@ router.route('/test/id')
     .get(users.getUser)
     .patch(users.updateUser)
     .delete(users.deleteUser);
+router.route('/test/listing')
+    .get(listings.getListing)
+    .patch(listings.updateListing)
+    .delete(listings.deleteListing)
+    .post(listings.newListing);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
