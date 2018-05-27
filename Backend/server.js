@@ -101,10 +101,18 @@ router.route('/test/id')
     .patch(users.updateUser)
     .delete(users.deleteUser);
 router.route('/test/listing')
-    .get(listings.getListing)
-    .patch(listings.updateListing)
-    .delete(listings.deleteListing)
-    .post(listings.newListing);
+    .get(function(req, res){
+			listings.getListing
+		})
+    .patch(function(req, res){
+			listings.updateListing
+		})
+    .delete(function(req, res){
+			listings.deleteListing
+		})
+    .post(function(req, res){
+			listings.newListing
+		});
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
