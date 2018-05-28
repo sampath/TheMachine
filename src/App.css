@@ -3,5 +3,11 @@
 }
 
 .App .navbar-brand {
-  font-weight: bold;
+  font-weight: 400;
+  font-size: 16pt;
+}
+
+.navbar {
+  background: #e1f4e9;
+  margin-bottom: 15px;
 }

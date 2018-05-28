@@ -1,0 +1,45 @@
+.listing-tile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  background: white;
+
+  cursor: pointer;
+}
+
+.listing-pic {
+  display: flex;
+  justify-content: center;
+
+  width: 80px;
+  height: 80px;
+  padding: 5px;
+
+  border-radius: 40px;
+  border: 5px solid #82dd72;
+}
+
+img {
+  align-self: center;
+
+  border-radius: 35%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.listing-title {
+  align-self: center;
+  transform: translateY(-5px);
+
+  font-size: 16pt;
+  font-weight: 700;
+}
+
+.listing-price {
+  align-self: center;
+  font-weight: 400;
+}
