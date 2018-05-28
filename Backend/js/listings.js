@@ -42,25 +42,14 @@ function getListing(req, res) {
 }
 
 function newListing(req, res) {
-    // Uploading test image
-    var testRef = server.storage.child('Test.jpg');
-    const file = __dirname+'Test.jpg';
-    const metadata = { contentType: file.type };
-    const task = ref.child(name).put(file, metadata);
-
-    // Image URL
-    var imgURL;
-    task.then((snapshot) => {
-        imgURL =snapshot.downloadURL;
-    });
     listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
         ownerID: '?',
         price: req.body.price,
         availability: 1,
-        endTime: req.body.endTime,
-        pictureURL: imgURL,
+        endTime: '?',
+        pictureURL: '?',
         description: req.body.description
     }, err => {
         if(err){
