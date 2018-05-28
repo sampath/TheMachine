@@ -26,7 +26,7 @@ function newUser(req, res) {
         registrationDate: Date.now(),
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-        rating: 0
+        avgRating: 0.0
 
     }, function(err) {
         if(err){
