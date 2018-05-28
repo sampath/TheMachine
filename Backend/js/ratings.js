@@ -3,6 +3,7 @@ var server = require('../server.js');
 var ratingsRef = server.db.ref("ratings");
 
 //Posts a new Rating
+// need to somehow update ratings fields in listings and transactions
 function newRating(req, res){
     ratingsRef.push({
         listingID : req.body.listingID,

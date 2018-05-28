@@ -61,7 +61,8 @@ function newListing(req, res) {
         availability: 1,
         endTime: req.body.endTime,
         pictureURL: imgURL,
-        description: req.body.description
+        description: req.body.description,
+        avgRating: 0.0
     }, err => {
         if(err){
             res.send(err)
