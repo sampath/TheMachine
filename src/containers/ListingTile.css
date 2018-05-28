@@ -35,11 +35,12 @@ img {
   align-self: center;
   transform: translateY(-5px);
 
-  font-size: 16pt;
+  font-size: 20pt;
   font-weight: 700;
 }
 
 .listing-price {
   align-self: center;
+  font-size: 12pt;
   font-weight: 400;
 }

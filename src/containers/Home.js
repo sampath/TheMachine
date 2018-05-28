@@ -42,13 +42,20 @@ const listingList = [
 ]
 
 export default class Home extends Component {
+  listingClick() {
+    console.log("listing clicked");
+  }
+
   render() {
     return (
       <div className="Home">
         <div className="lander">
           {
             listingList.map((item, i) => (
-              <ListingTile key={item.imagealt} item={item} />
+              <ListingTile
+                key={item.imagealt}
+                item={item}
+              />
             ))
           }
         </div>
