@@ -91,28 +91,25 @@ router.route('/ratings')
 
 // Test routing
 // Go to localhost:3000/test
+
 router.route('/test')
     .get(function(req,res,next){
       res.sendFile(__dirname+'/tester.html');
-    })
+    });
+router.route('/test/users')
+	.get(users.getUsers)
     .post(users.newUser);
-router.route('/test/id')
+router.route('/test/users/:id')
     .get(users.getUser)
     .patch(users.updateUser)
     .delete(users.deleteUser);
-router.route('/test/listing')
-    .get(function(req, res){
-			listings.getListing
-		})
-    .patch(function(req, res){
-			listings.updateListing
-		})
-    .delete(function(req, res){
-			listings.deleteListing
-		})
-    .post(function(req, res){
-			listings.newListing
-		});
+router.route('/test/listings/:id')
+    .get(listings.getListing)
+    .patch(listings.updateListing)
+    .delete(listings.deleteListing);
+router.route('/test/listings')
+	.get(listings.getListings)
+    .post(listings.newListing);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');

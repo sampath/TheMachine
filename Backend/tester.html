@@ -36,7 +36,7 @@
 
 		<!-- Listing Test Forms -->
 		<h3>New Listing</h3>
-		<form id="newlistingForm" name="newlistingForm" method="POST" action="/test/listing">
+		<form id="newlistingForm" name="newlistingForm" method="POST" action="/test/listings">
 		  <label for="name">Item Name</label>
 			<input type="text" id="itemName" name="itemName"></br>
 			<label for="name">Tags</label>
@@ -45,11 +45,13 @@
 		  <input type="text" id="price" name="price"></br>
 		  <label for="name">Description</label>
 		  <input type="text" id="description" name="description"></br>
+			<label for="name">End Time</label>
+			<input type="text" id="endTime" name="endTime"></br>
 		  <input type="submit" value="submit">
 		</form>
 
 		<h3>Update Listing</h3>
-		<form id="updatelistingForm" name="updatelistingForm" method="PATCH" action="/test/listing">
+		<form id="updatelistingForm" name="updatelistingForm" method="PATCH" action="/test/listings/-LDK55ZkzwmC60Rn0lFw">
 		  <label for="name">Item Name</label>
 			<input type="text" id="name" name="name"></br>
 			<label for="name">Tags</label>
@@ -62,7 +64,7 @@
 		</form>
 
 	  	<h3>Delete Listing</h3>
-		<form id="updatelistingForm" name="updatelistingForm" method="DELETE" action="/test/listing">
+		<form id="deletelistingForm" name="deletelistingForm" method="DELETE" action="/test/listings">
 		  <label for="id">ID</label>
 		  <input type="text" id="id" name="id"></br>
 		  <input type="submit" value="submit">
