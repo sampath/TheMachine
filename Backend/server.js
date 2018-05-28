@@ -41,6 +41,8 @@ module.exports= {
 
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
+var ratings = require('./js/ratings.js');
+var alerts = require('./js/alerts.js');
 console.log("Get route handlers");
 
 router.get('/', function(req, res) {
@@ -87,6 +89,15 @@ router.route('/ratings/:id')
 router.route('/ratings')
 		.post(function(req, res){
 			ratings.newRating
+		});
+
+//Alerts requests
+router.route('/alerts/:id')
+		.get(function(req,res){
+			alerts.getAlert
+		})
+		.post(function(req,res){
+			alerts.postAlert
 		});
 
 // Test routing
