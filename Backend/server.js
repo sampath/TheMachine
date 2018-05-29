@@ -42,6 +42,9 @@ module.exports= {
 
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
+var ratings = require('./js/ratings.js');
+var alerts = require('./js/alerts.js');
+var transactions = require('./js/transactions.js');
 console.log("Get route handlers");
 
 router.get('/', function(req, res) {
@@ -88,6 +91,30 @@ router.route('/ratings/:id')
 router.route('/ratings')
 		.post(function(req, res){
 			ratings.newRating
+		});
+
+//Alerts requests
+router.route('/alerts/:id')
+		.get(function(req,res){
+			alerts.getAlert
+		})
+		.post(function(req,res){
+			alerts.postAlert
+		});
+
+//Transactions requests
+router.route('/transactions/:id')
+		.get(function(req,res){
+			transactions.getTransaction
+		})
+		.post(function(req,res){
+			transactions.newTransaction
+		})
+		.patch(function(req, res){
+			transactions.updateTransaction
+		})
+    	.delete(function(req, res){
+			transactions.deleteTransaction
 		});
 
 // Test routing
