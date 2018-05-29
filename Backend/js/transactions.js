@@ -58,3 +58,5 @@ function deleteTransaction(req, res) {
         }
     });
 }
+
+module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction};
