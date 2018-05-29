@@ -41,7 +41,33 @@ function getListing(req, res) {
     });
 }
 
+/* Function for uploading file using bucket */
+function uploadFile(file, metadata) {
+    var options = {
+        destination: file,
+        resumable: false,
+        metadata: {
+            metadata: metadata
+        }
+    };
+    server.bucket.upload(file, options, function(err, remoteFile) {
+        if (!err) {
+            console.log("Uploaded!");
+        } else {
+            console.log(err);
+        }
+    });
+}
+
 function newListing(req, res) {
+
+    /* Use when need to upload image
+    var metadata = {
+        id: '1234'
+    };
+    uploadFile(""+__dirname+'/Test.jpg', metadata);
+    */
+
     listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
