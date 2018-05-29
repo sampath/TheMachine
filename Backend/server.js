@@ -43,10 +43,7 @@ var users = require('./js/users.js');
 var listings = require('./js/listings.js');
 var ratings = require('./js/ratings.js');
 var alerts = require('./js/alerts.js');
-<<<<<<< HEAD
 var transactions = require('./js/transactions.js');
-=======
->>>>>>> 359bab393870e8542cbbe74a6f2c1d74a86ec1c2
 console.log("Get route handlers");
 
 router.get('/', function(req, res) {
@@ -104,7 +101,6 @@ router.route('/alerts/:id')
 			alerts.postAlert
 		});
 
-<<<<<<< HEAD
 //Transactions requests
 router.route('/transactions/:id')
 		.get(function(req,res){
@@ -120,8 +116,6 @@ router.route('/transactions/:id')
 			transactions.deleteTransaction
 		});
 
-=======
->>>>>>> 359bab393870e8542cbbe74a6f2c1d74a86ec1c2
 // Test routing
 // Go to localhost:3000/test
 
