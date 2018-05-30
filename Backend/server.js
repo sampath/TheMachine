@@ -138,8 +138,10 @@ router.route('/test/listings/:id')
 router.route('/test/listings')
 	.get(listings.getListings)
     .post(listings.newListing);
-router.rout('/test/ratings')
-  .post(ratings.newRating);
+router.route('/test/ratings')
+    .post(function(req,res){
+      ratings.newRating
+    });
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');

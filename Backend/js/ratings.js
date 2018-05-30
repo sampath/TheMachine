@@ -11,7 +11,7 @@ function newRating(req, res){
         isOwner : '?',
         stars : req.body.stars,
         price : req.body.price,
-        date : Date.now()
+        date : Date.now(),
         title : req.body.title,
         comment : req.body.comment
     }, err => {
