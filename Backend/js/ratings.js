@@ -6,12 +6,12 @@ var ratingsRef = server.db.ref("ratings");
 // need to somehow update ratings fields in listings and transactions
 function newRating(req, res){
     ratingsRef.push({
-        listingID : req.body.listingID,
-        userID : req.body.userID,
-        isOwner : req.body.isOwner,
+        listingID : '?',
+        userID : '?',
+        isOwner : '?',
         stars : req.body.stars,
         price : req.body.price,
-        date : req.body.date,
+        date : Date.now()
         title : req.body.title,
         comment : req.body.comment
     }, err => {
