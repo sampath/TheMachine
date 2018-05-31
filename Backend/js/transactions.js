@@ -96,4 +96,4 @@ function setRenterClosedTrue(req, res){
     alertsRef.child(id).child(renterClosed).setValue(true);
 }
 
-module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction};
+module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction, setOwnerConfirmedTrue, setRenterConfirmedTrue, setOwnerClosedTrue, setRenterClosedTrue};
