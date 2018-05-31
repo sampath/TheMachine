@@ -142,7 +142,7 @@ router.route('/test/ratings')
     .post(ratings.newRating);
 router.route('/test/transactions')
     .post(transactions.newTransaction)
-    .get(tansactions.getTransaction)
+    .get(transactions.getTransaction)
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
