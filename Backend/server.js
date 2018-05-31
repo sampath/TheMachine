@@ -140,6 +140,8 @@ router.route('/test/listings')
     .post(listings.newListing);
 router.route('/test/ratings')
     .post(ratings.newRating);
+router.route('/test/transactions')
+    .post(transactions.newTransaction);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
