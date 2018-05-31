@@ -37,8 +37,8 @@ function newUser(req, res) {
 function updateUser(req, res) {
     let id = req.params.id;
     let user = {};
-    req.body.keys.forEach((param) => {
-        user[param] = req.body[param];
+    req.body.forEach((key, val) => {
+        user[key] = val;
     });
     usersRef.child(id).update(user, function(err) {
         if(err) {

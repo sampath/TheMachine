@@ -1,7 +1,7 @@
 /* Base Setup */
 var express = require('express');
 var firebase = require('firebase');
-var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 /* Admin SDK Setup */
 var admin = require('firebase-admin');
@@ -54,7 +54,7 @@ router.get('/', function(req, res) {
 // Set up bodyParser
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({extended:true}));
-
+router.use(methodOverride('_method'));
 // User requests
 router.route('/users')
     .get(users.getUsers)
