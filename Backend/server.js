@@ -31,6 +31,7 @@ var router = express.Router();
 app.use('/', router);
 
 /* Set up Admin Storage Bucket */
+//const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
 const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
 console.log("done");
 
@@ -142,7 +143,7 @@ router.route('/test/ratings')
     .post(ratings.newRating);
 router.route('/test/transactions')
     .post(transactions.newTransaction)
-    .get(tansactions.getTransaction)
+    .get(transactions.getTransaction)
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
