@@ -1,11 +1,15 @@
 var server = require('../server.js');
 
-var ratingsRef = server.db.ref("ratings");
+var reviewsRef = server.db.ref("reviews");
 
 //Posts a new Rating
 // need to somehow update ratings fields in listings and transactions
-function newRating(req, res){
-    ratingsRef.push({
+function newReview(req, res){
+    var stars = req.body.stars;
+    //TODO:Get the rating specific to the userID
+
+    //TODO: Calculate the new rating and add patch it
+    reviewsRef.push({
         listingID : '?',
         userID : '?',
         isOwner : '?',
@@ -22,9 +26,10 @@ function newRating(req, res){
 }
 
 //Gets the ratings for a user/listing
-function getRating(req, res) {
+function getReview(req, res) {
     let id = req.params.id;
-    ratingsRef.child(id).once("value", snapshot => {
+    console.log(id);
+    reviewRef.child(id).once("value", snapshot => {
         if(snapshot.val() == null) {
             res.send("User id error");
         } else {
@@ -33,4 +38,4 @@ function getRating(req, res) {
     });
 }
 
-module.exports = {getRating, newRating};
+module.exports = {getReview, newReview};
