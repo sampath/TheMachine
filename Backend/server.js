@@ -31,7 +31,6 @@ var router = express.Router();
 app.use('/', router);
 
 /* Set up Admin Storage Bucket */
-//const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
 const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
 console.log("done");
 
@@ -84,7 +83,7 @@ router.route('/listings/:id')
 			listings.deleteListing
 		});
 
-// Ratings requests
+// Reviewss requests
 router.route('/reviews/:id')
 	  .get(function(req, res){
 			reviews.getReview

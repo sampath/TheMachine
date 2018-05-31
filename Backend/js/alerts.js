@@ -26,7 +26,7 @@ function postAlert(req, res){
 function setAlertToRead(req, res){
     //Changes the alert to have been read
     let id = req.param.id;
-    alertsRef.child(id).child(read).setValue(true);
+    alertsRef.child(id).child('read').set(true);
 }
 
 module.exports = {getAlert, postAlert, setAlertToRead}

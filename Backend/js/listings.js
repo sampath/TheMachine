@@ -1,6 +1,5 @@
 //import db from "../server.js"
 var server = require('../server.js');
-
 var listingsRef = server.db.ref("listings");
 
 function getListings(req, res) {
@@ -42,7 +41,7 @@ function getListing(req, res) {
 }
 
 /* Function for uploading file using bucket */
-function uploadFile(file, metadata) {
+function uploadFile(file, metadata, id) {
     var options = {
         destination: file,
         resumable: false,
@@ -50,13 +49,21 @@ function uploadFile(file, metadata) {
             metadata: metadata
         }
     };
+
     server.bucket.upload(file, options, function(err, remoteFile) {
         if (!err) {
             console.log("Uploaded!");
+            remoteFile.getDownloadURL
+            remoteFile.getSignedUrl({
+                action: 'read',
+                expires: '03-17-2025'
+              }).then(signedUrls => {
+                listingsRef.child(id).child('pictureURL').set(signedUrls[0]);
+              });
         } else {
             console.log(err);
         }
-    });
+    })
 }
 
 function newListing(req, res) {
@@ -64,9 +71,8 @@ function newListing(req, res) {
     var metadata = {
         id: '1234'
     };
-    uploadFile("Test.jpg", metadata);
 
-    listingsRef.push({
+    var pushedRef = listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
         ownerID: '?',
@@ -81,6 +87,8 @@ function newListing(req, res) {
             res.send(err)
         }
     });
+
+    uploadFile(""+__dirname+"/Test.jpg", metadata, pushedRef.key);
 }
 
 function updateListing(req, res) {
