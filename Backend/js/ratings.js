@@ -32,3 +32,5 @@ function getRating(req, res) {
         }
     });
 }
+
+module.exports = {getRating, newRating};

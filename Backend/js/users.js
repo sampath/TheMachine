@@ -20,9 +20,8 @@ function getUser(req, res) {
 }
 
 function newUser(req, res) {
-
     usersRef.push({
-        name: user,//req.body.name,
+        name: req.body.name,//req.body.name,
         registrationDate: Date.now(),
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,

@@ -72,7 +72,7 @@ router.route('/listings')
     .post(function(req, res){
 			listings.newListing
 		});
-router.route('listings/:id')
+router.route('/listings/:id')
     .get(function(req, res){
 			listings.getListing
 		})
@@ -139,9 +139,7 @@ router.route('/test/listings')
 	.get(listings.getListings)
     .post(listings.newListing);
 router.route('/test/ratings')
-    .post(function(req,res){
-      ratings.newRating
-    });
+    .post(ratings.newRating);
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');

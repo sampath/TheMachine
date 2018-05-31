@@ -6,7 +6,7 @@
 
 		<!-- User Test Forms -->
 	  	<h3>New User</h3>
-		<form id="newuserForm" name="newuserForm" method="POST" action="/test">
+		<form id="newuserForm" name="newuserForm" method="POST" action="/test/users">
 		  <label for="name">Name</label>
 		  <input type="text" id="name" name="name"></br>
 		  <label for="name">Email</label>
@@ -17,7 +17,7 @@
 		</form>
 
 	  	<h3>Update User</h3>
-		<form id="updateUserForm" name="updateUserForm" method="PATCH" action="/test">
+		<form id="updateUserForm" name="updateUserForm" method="PATCH" action="/test/users">
 		  <label for="name">Name</label>
 		  <input type="text" id="name" name="name"></br>
 		  <label for="name">Email</label>
@@ -28,7 +28,7 @@
 		</form>
 
 	  	<h3>Delete User</h3>
-		<form id="updateUserForm" name="updateUserForm" method="DELETE" action="/test/">
+		<form id="updateUserForm" name="updateUserForm" method="DELETE" action="/test/users">
 		  <label for="id">ID</label>
 		  <input type="text" id="id" name="id"></br>
 		  <input type="submit" value="submit">
@@ -51,7 +51,7 @@
 		</form>
 
 		<h3>Update Listing</h3>
-		<form id="updatelistingForm" name="updatelistingForm" method="PATCH" action="/test/listings/-LDK55ZkzwmC60Rn0lFw">
+		<form id="updatelistingForm" name="updatelistingForm" method="PATCH" action="/test/listings/">
 		  <label for="name">Item Name</label>
 			<input type="text" id="name" name="name"></br>
 			<label for="name">Tags</label>
