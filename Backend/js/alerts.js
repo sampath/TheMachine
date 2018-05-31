@@ -22,3 +22,5 @@ function postAlert(req, res){
       read : req.body.read
     });
 }
+
+module.exports = {getAlert, postAlert}
