@@ -61,15 +61,20 @@ function newListing(req, res) {
 function updateListing(req, res) {
     let id = req.params.id;
     let listing = {};
-    req.body.keys.forEach((param) => {
-        listing[param] = req.body[param];
-    });
+    console.log(typeof req.body);
+    for (property in req.body) {
+        if (req.body.property != null)
+            listing[property] = req.body.property;
+    };
+    console.log(id);
+    let listing_node = listingsRef.child(id);
+    console.log(listing_node);
     listingsRef.child(id).update(listing, function(err) {
         if(err) {
             res.send(err)
         }
     });
-    res.json();
+    console.log(listingsRef.child(id))
 }
 
 function deleteListing(req, res) {

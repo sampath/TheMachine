@@ -1,7 +1,7 @@
 /* Base Setup */
 var express = require('express');
 var firebase = require('firebase');
-var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 /* Admin SDK Setup */
 var admin = require('firebase-admin');
@@ -32,7 +32,8 @@ var app = express();
 var db = admin.database();
 var router = express.Router();
 
-app.use('/', router);
+app.use(router);
+/* method override to send patch/delete requests from tester */
 module.exports= {
 	app: app,
     db: db,
@@ -50,7 +51,7 @@ router.get('/', function(req, res) {
 // Set up bodyParser
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({extended:true}));
-
+router.use(methodOverride('_method'));
 // User requests
 router.route('/users')
     .get(users.getUsers)
