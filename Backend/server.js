@@ -85,13 +85,13 @@ router.route('/listings/:id')
 		});
 
 // Ratings requests
-router.route('/ratings/:id')
+router.route('/reviews/:id')
 	  .get(function(req, res){
-			ratings.getRating
+			reviews.getReview
 		});
-router.route('/ratings')
+router.route('/reviews')
 		.post(function(req, res){
-			ratings.newRating
+			reviews.getReview
 		});
 
 //Alerts requests
@@ -139,8 +139,8 @@ router.route('/test/listings/:id')
 router.route('/test/listings')
 	.get(listings.getListings)
     .post(listings.newListing);
-router.route('/test/ratings')
-    .post(ratings.newRating);
+router.route('/test/reviews')
+    .post(ratings.newReview);
 router.route('/test/transactions')
     .post(transactions.newTransaction)
     .get(transactions.getTransaction)
