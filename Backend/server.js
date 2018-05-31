@@ -23,25 +23,29 @@ admin.initializeApp({
 });
 console.log("Admin SDK setup complete");
 
-
-// Storage reference
-//var storage = admin.storage().bucket();
-
 /* Get Route Handlers */
 var app = express();
 var db = admin.database();
 var router = express.Router();
 
-app.use(router);
-/* method override to send patch/delete requests from tester */
+app.use('/', router);
+
+/* Set up Admin Storage Bucket */
+//const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
+const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
+console.log("done");
+
 module.exports= {
 	app: app,
     db: db,
-//    storage: storage
+    bucket: bucket
 };
 
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
+var reviews = require('./js/reviews.js');
+var alerts = require('./js/alerts.js');
+var transactions = require('./js/transactions.js');
 console.log("Get route handlers");
 
 router.get('/', function(req, res) {
@@ -69,7 +73,7 @@ router.route('/listings')
     .post(function(req, res){
 			listings.newListing
 		});
-router.route('listings/:id')
+router.route('/listings/:id')
     .get(function(req, res){
 			listings.getListing
 		})
@@ -81,13 +85,37 @@ router.route('listings/:id')
 		});
 
 // Ratings requests
-router.route('/ratings/:id')
+router.route('/reviews/:id')
 	  .get(function(req, res){
-			ratings.getRating
+			reviews.getReview
 		});
-router.route('/ratings')
+router.route('/reviews')
 		.post(function(req, res){
-			ratings.newRating
+			reviews.getReview
+		});
+
+//Alerts requests
+router.route('/alerts/:id')
+		.get(function(req,res){
+			alerts.getAlert
+		})
+		.post(function(req,res){
+			alerts.postAlert
+		});
+
+//Transactions requests
+router.route('/transactions/:id')
+		.get(function(req,res){
+			transactions.getTransaction
+		})
+		.post(function(req,res){
+			transactions.newTransaction
+		})
+		.patch(function(req, res){
+			transactions.updateTransaction
+		})
+    	.delete(function(req, res){
+			transactions.deleteTransaction
 		});
 
 // Test routing
@@ -111,6 +139,11 @@ router.route('/test/listings/:id')
 router.route('/test/listings')
 	.get(listings.getListings)
     .post(listings.newListing);
+router.route('/test/reviews')
+    .post(reviews.newReview);
+router.route('/test/transactions')
+    .post(transactions.newTransaction)
+    .get(transactions.getTransaction)
 
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');

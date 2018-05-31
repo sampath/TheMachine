@@ -41,16 +41,41 @@ function getListing(req, res) {
     });
 }
 
+/* Function for uploading file using bucket */
+function uploadFile(file, metadata) {
+    var options = {
+        destination: file,
+        resumable: false,
+        metadata: {
+            metadata: metadata
+        }
+    };
+    server.bucket.upload(file, options, function(err, remoteFile) {
+        if (!err) {
+            console.log("Uploaded!");
+        } else {
+            console.log(err);
+        }
+    });
+}
+
 function newListing(req, res) {
+
+    var metadata = {
+        id: '1234'
+    };
+    uploadFile("Test.jpg", metadata);
+
     listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
         ownerID: '?',
         price: req.body.price,
         availability: 1,
+        description: req.body.description,
         endTime: '?',
         pictureURL: '?',
-        description: req.body.description
+        avgRating: 0.0
     }, err => {
         if(err){
             res.send(err)
