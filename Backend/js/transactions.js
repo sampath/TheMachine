@@ -70,4 +70,30 @@ function deleteTransaction(req, res) {
     });
 }
 
+function setOwnerConfirmedTrue(req, res){
+    //Changes the alert to have been read
+    let id = req.param.id;
+    alertsRef.child(id).child(ownerConfirmed).setValue(true);
+    alertsRef.child(id).child(renterConfirmed).setValue(false);
+}
+
+function setRenterConfirmedTrue(req, res){
+    //Changes the alert to have been read
+    let id = req.param.id;
+    alertsRef.child(id).child(renterConfirmed).setValue(true);
+    alertsRef.child(id).child(startTime).setValue(Date.now());
+}
+
+function setOwnerClosedTrue(req, res){
+    //Changes the alert to have been read
+    let id = req.param.id;
+    alertsRef.child(id).child(ownerClosed).setValue(true);
+}
+
+function setRenterClosedTrue(req, res){
+    //Changes the alert to have been read
+    let id = req.param.id;
+    alertsRef.child(id).child(renterClosed).setValue(true);
+}
+
 module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction};
