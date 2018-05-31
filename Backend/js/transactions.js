@@ -96,26 +96,4 @@ function setRenterClosedTrue(req, res){
     alertsRef.child(id).child('renterClosed').set(true);
 }
 
-function testTransactionID(){
-    var transRef = transactionsRef.push({
-        listingID: "listing1",
-        ownerID: "owner1", //user id of the owner,
-        renterID: "renter1", //current user,
-        price: "20",
-        startTime: Date.now(),
-        endTime: Date.now(),
-        ownerConfirmed: false,
-		renterConfirmed: true,
-		ownerClosed: false,
-		renterClosed: false,
-		closed: false
-
-    }, function(err) {
-        if(err){
-            res.send(err)
-        }
-    });
-    return transRef.key;
-}
-
 module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction, setOwnerConfirmedTrue, setRenterConfirmedTrue, setOwnerClosedTrue, setRenterClosedTrue};
