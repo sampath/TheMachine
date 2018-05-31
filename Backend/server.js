@@ -43,7 +43,7 @@ module.exports= {
 
 var users = require('./js/users.js');
 var listings = require('./js/listings.js');
-var ratings = require('./js/ratings.js');
+var reviews = require('./js/reviews.js');
 var alerts = require('./js/alerts.js');
 var transactions = require('./js/transactions.js');
 console.log("Get route handlers");
@@ -140,7 +140,7 @@ router.route('/test/listings')
 	.get(listings.getListings)
     .post(listings.newListing);
 router.route('/test/reviews')
-    .post(ratings.newReview);
+    .post(reviews.newReview);
 router.route('/test/transactions')
     .post(transactions.newTransaction)
     .get(transactions.getTransaction)

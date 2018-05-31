@@ -64,14 +64,8 @@ function newListing(req, res) {
     var metadata = {
         id: '1234'
     };
-    uploadFile(""+__dirname+'/Test.jpg', metadata);
+    uploadFile("Test.jpg", metadata);
 
-/*
-    var metadata = {
-        id: '1234'
-    };
-    var uploadFile(""+__dirname+'/Test.jpg', metadata);
-*/
     listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
