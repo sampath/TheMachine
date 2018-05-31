@@ -3,7 +3,18 @@ var transactionsRef = server.db.ref("transactions");
 
 function getTransaction(req, res) {
     let id = req.params.id;
-    transactionRef.child(id).once("value", function(snapshot) {
+    transactionsRef.child(id).once("value", function(snapshot) {
+        if(snapshot.val() == null) {
+            res.send("Transaction id error");
+        } else {
+            res.json(snapshot.val())
+        }
+    });
+}
+
+function getTransaction(userID) {
+    let id = userID;
+    transactionsRef.child(id).once("value", function(snapshot) {
         if(snapshot.val() == null) {
             res.send("Transaction id error");
         } else {
@@ -13,7 +24,7 @@ function getTransaction(req, res) {
 }
 
 function newTransaction(req, res) {
-    
+
     transactionsRef.push({
         listingID: req.body.listingID,
         ownerID: req.body.ownerID, //user id of the owner,
@@ -26,7 +37,7 @@ function newTransaction(req, res) {
 		ownerClosed: false,
 		renterClosed: false,
 		closed: false
-    
+
     }, function(err) {
         if(err){
             res.send(err)
