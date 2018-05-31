@@ -15,12 +15,18 @@ function getAlert(req, res){
 }
 
 function postAlert(req, res){
-    //Pushes the alert to the databse
+    //Pushes the alert to the database
     alertsRef.push({
       content : req.body.content,
       time : Date.now(),
-      read : req.body.read
+      read : false
     });
 }
 
-module.exports = {getAlert, postAlert}
+function readAlert(req, res){
+    //Changes the alert to have been read
+    let id = req.param.id;
+    alertsRef.child(id).child(read).setValue(true);
+}
+
+module.exports = {getAlert, postAlert, readAlert}
