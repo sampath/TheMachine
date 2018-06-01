@@ -8,8 +8,9 @@ cache:
 
 before_install:
   - cd Backend
-  - echo $TRAVIS_BUILD_DIR
-  - ls
+
+install:
+  - npm install
 
 script:
   - npm test
