@@ -1,3 +1,3 @@
 # The Machine
 
-Flick- a renting app
+Flick- a dope  renting app
