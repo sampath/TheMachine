@@ -18,8 +18,8 @@ var config = {
 firebase.initializeApp(config);
 
 admin.initializeApp({
-	  credential: admin.credential.cert(serviceAccount),
-	  databaseURL: "https://flick-b0e2c.firebaseio.com"
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: "https://flick-b0e2c.firebaseio.com"
 });
 console.log("Admin SDK setup complete");
 
@@ -35,7 +35,7 @@ const bucket = admin.storage().bucket("flick-b0e2c.appspot.com");
 console.log("done");
 
 module.exports= {
-	app: app,
+    app: app,
     db: db,
     bucket: bucket
 };
@@ -66,56 +66,31 @@ router.route('/users/:id')
 
 // Listing requests
 router.route('/listings')
-    .get(function(req, res){
-			listings.getListings
-		})
-    .post(function(req, res){
-			listings.newListing
-		});
+    .get(listings.getAllListings)
+    .post(listings.newListing);
+
 router.route('/listings/:id')
-    .get(function(req, res){
-			listings.getListing
-		})
-    .patch(function(req, res){
-			listings.updateListing
-		})
-    .delete(function(req, res){
-			listings.deleteListing
-		});
+    .get(listings.getListing)
+    .patch(listings.updateListing)
+    .delete(listings.deleteListing);
 
 // Reviewss requests
 router.route('/reviews/:id')
-	  .get(function(req, res){
-			reviews.getReview
-		});
+      .get(reviews.getReview);
 router.route('/reviews')
-		.post(function(req, res){
-			reviews.getReview
-		});
+        .post(reviews.getReview);
 
 //Alerts requests
 router.route('/alerts/:id')
-		.get(function(req,res){
-			alerts.getAlert
-		})
-		.post(function(req,res){
-			alerts.postAlert
-		});
+        .get(alerts.getAlert)
+        .post(alerts.postAlert);
 
 //Transactions requests
 router.route('/transactions/:id')
-		.get(function(req,res){
-			transactions.getTransaction
-		})
-		.post(function(req,res){
-			transactions.newTransaction
-		})
-		.patch(function(req, res){
-			transactions.updateTransaction
-		})
-    	.delete(function(req, res){
-			transactions.deleteTransaction
-		});
+        .get(transactions.getTransaction)
+        .post(transactions.newTransaction)
+        .patch(transactions.updateTransaction)
+    .delete(transactions.deleteTransaction);
 
 // Test routing
 // Go to localhost:3000/test
@@ -125,7 +100,7 @@ router.route('/test')
       res.sendFile(__dirname+'/tester.html');
     });
 router.route('/test/users')
-	.get(users.getUsers)
+    .get(users.getUsers)
     .post(users.newUser);
 router.route('/test/users/:id')
     .get(users.getUser)
@@ -136,7 +111,7 @@ router.route('/test/listings/:id')
     .patch(listings.updateListing)
     .delete(listings.deleteListing);
 router.route('/test/listings')
-	.get(listings.getListings)
+    .get(listings.getListings)
     .post(listings.newListing);
 router.route('/test/reviews')
     .post(reviews.newReview);
@@ -147,3 +122,9 @@ router.route('/test/transactions')
 app.listen(3000, ()=> {
     console.log('server started at http://localhost:3000/');
 });
+
+
+
+
+
+

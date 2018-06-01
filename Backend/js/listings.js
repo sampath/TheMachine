@@ -2,6 +2,12 @@
 var server = require('../server.js');
 var listingsRef = server.db.ref("listings");
 
+function getAllListings(req, res){
+    listingsRef.once("value", (snapshot, prevChildKey) => {
+        res.json(snapshot.val())
+    });
+}
+
 function getListings(req, res) {
     let queryRef = listingsRef.orderByChild(req.query.orderBy) // add default key to order by
         .startAt(req.query.minVal || 0)
@@ -121,4 +127,4 @@ function deleteListing(req, res) {
     });
 }
 
-module.exports = {getListings, getListing, newListing, updateListing, deleteListing};
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings};
