@@ -3,12 +3,12 @@
 process.env.NODE_ENV = 'test';
 
 let firebase = require("firebase");
-let listings = require("../../js/listings.js");
+let listings = require("../js/listings.js");
 
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../../server').app;
+let server = require('../server').app;
 let should = chai.should();
 let expect = chai.expect;
 
@@ -34,14 +34,14 @@ describe('Listings',() =>{
   //Setup for each test
   beforeEach((done) => {
 
-    listings.newListing(listing, {
-      body: null
-    });
+    // listings.newListing(listing, {
+    //   body: null
+    // });
     done();
   });
 
   //Get all the listings
-  it('should return listing A', function(){
+  it('should return listing A', function() {
     chai.request(server)
         .get('/listings')
         .end((err, res) =>{
@@ -49,7 +49,7 @@ describe('Listings',() =>{
             expect(res.body).should.be.a('array');
             expect(res.body.length).should.be.eql(1);
             expect(res.body[0]).should.be.eql(listing);
-        done();
+            done();
         });
   });
 

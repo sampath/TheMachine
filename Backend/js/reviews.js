@@ -1,6 +1,5 @@
-var server = require('../server.js');
-
-var reviewsRef = server.db.ref("reviews");
+var database = require('./db.js');
+var reviewsRef = database.db.ref("reviews");
 
 //Posts a new Rating
 // need to somehow update ratings fields in listings and transactions
