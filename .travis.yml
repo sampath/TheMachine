@@ -4,7 +4,8 @@ node_js:
   - stable
 
 cache:
-  - node_modules
+  directories:
+    - "node_modules"
 
 before_install:
   - cd Backend
