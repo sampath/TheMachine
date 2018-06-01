@@ -34,9 +34,9 @@ describe('Listings',() =>{
   //Setup for each test
   beforeEach((done) => {
 
-    listings.newListing(listing, {
-      body: null
-    });
+    // listings.newListing(listing, {
+    //   body: null
+    // });
     done();
   });
 

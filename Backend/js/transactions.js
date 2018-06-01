@@ -1,5 +1,5 @@
-var server = require('../server');
-var transactionsRef = server.db.ref("transactions");
+var database = require('./db.js');
+var transactionsRef = database.db.ref("transactions");
 
 function getTransaction(req, res) {
     let id = req.params.id;
