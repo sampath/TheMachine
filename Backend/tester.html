@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<h1>Testing Interface</h1>
+	</head>
+	<body>
+
+		<!-- User Test Forms -->
+	  	<h3>New User</h3>
+		<form id="newuserForm" name="newuserForm" method="POST" action="/test/users">
+		  <label for="name">Name</label>
+		  <input type="text" id="name" name="name"></br>
+		  <label for="name">Email</label>
+		  <input type="text" id="email" name="email"></br>
+		  <label for="name">Phone Number</label>
+		  <input type="text" id="phoneNumber" name="phoneNumber"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+	  	<h3>Update User</h3>
+
+		<form id="updateUserForm" name="updateUserForm" method="PATCH" action="/test/users">
+		  <label for="name">Name</label>
+		  <input type="text" id="name" name="name"></br>
+		  <label for="name">Email</label>
+		  <input type="text" id="email" name="email"></br>
+		  <label for="name">Phone Number</label>
+		  <input type="text" id="phoneNumber" name="phoneNumber"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+	  	<h3>Delete User</h3>
+		<form id="updateUserForm" name="updateUserForm" method="post" action="/test">
+		  <label for="id">ID</label>
+		  <input type="text" id="id" name="id"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+		<!-- Listing Test Forms -->
+		<h3>New Listing</h3>
+		<form id="newlistingForm" name="newlistingForm" method="POST" action="/test/listings">
+		  <label for="name">Item Name</label>
+          <input type="text" id="itemName" name="itemName"></br>
+		  <label for="name">Tags</label>
+		  <input type="text" id="tags" name="tags"></br>
+		  <label for="name">Price</label>
+		  <input type="text" id="price" name="price"></br>
+		  <label for="name">Description</label>
+		  <input type="text" id="description" name="description"></br>
+		  <label for="name">End Time</label>
+		  <input type="text" id="endTime" name="endTime"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+		<h3>Update Listing</h3>
+		<form id="updatelistingForm" name="updatelistingForm" method="post" action="/test/listings/-LDd4h5wAjPZkG_adNG9?_method=patch">
+		  <label for="name">Item Name</label>
+		  <input type="text" id="name" name="name"></br>
+		  <label for="name">Tags</label>
+		  <input type="text" id="tags" name="tags"></br>
+		  <label for="name">Price</label>
+		  <input type="text" id="price" name="price"></br>
+		  <label for="name">Description</label>
+		  <input type="text" id="description" name="description"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+	  	<h3>Delete Listing</h3>
+		<form id="deletelistingForm" name="deletelistingForm" method="post" action="/test/listings?_method=delete">
+		  <label for="id">ID</label>
+		  <input type="text" id="id" name="id"></br>
+		  <input type="submit" value="submit">
+		</form>
+
+		<h3>Add Review</h3>
+		<form id="addReviewForm" name="addReviewForm" method="POST" action="/test/reviews">
+			<label for="stars">Stars</label>
+			<input type="stars" id="stars" name="stars"></br>
+			<label for="price">Price</label>
+			<input type="price" id="price" name="price"></br>
+			<label for="title">Title</label>
+			<input type="title" id="title" name="title"></br>
+			<label for="comment">Comment</label>
+			<input type="comment" id="comment" name="comment"></br>
+			<input type="submit" value="submit">
+		</form>
+
+		<h3>Add Transaction</h3>
+		<form id="addTransactionForm" name="addTransactionForm" method="POST" action="/test/transactions">
+			<label for="listingID">Listing ID</label>
+			<input type="listingID" id="listingID" name="listingID"></br>
+			<label for="ownerID">Owner ID</label>
+			<input type="ownerID" id="ownerID" name="ownerID"></br>
+			<label for="renterID">Renter ID</label>
+			<input type="renterID" id="renterID" name="renterID"></br>
+			<label for="price">Price</label>
+			<input type="price" id="price" name="price"></br>
+			<input type="submit" value="submit">
+		</form>
+	</body>
+
+</html>
