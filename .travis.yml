@@ -10,10 +10,6 @@ cache:
 before_install:
   - cd Backend
 
-script:
-  - npm test
-  - npm run start
-
 deploy:
   provider: heroku
   api_key: b7fa582d-233c-4ef1-945b-ca2eb67727d4
