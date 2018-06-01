@@ -6,9 +6,12 @@ node_js:
 cache:
   - node_modules
 
+before_install:
+  - cd Backend
+
 script:
   - npm test
-  - npm run build
+  - npm run start
 
 deploy:
   provider: heroku
