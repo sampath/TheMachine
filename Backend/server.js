@@ -15,6 +15,8 @@ router.use(bodyParser.urlencoded({extended:true}));
 router.use(methodOverride('_method'));
 routes.createRoutes(router);
 
+module.exports = {app};
+
 //Init Application
 app.use('/', router);
 app.listen(process.env.PORT || 3000, () => {
