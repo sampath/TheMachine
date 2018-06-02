@@ -1,25 +1,24 @@
 var database = require('./db.js');
 var transactionsRef = database.db.ref("transactions");
 
-function getTransaction(req, res) {
-    let id = req.params.id;
-    transactionsRef.child(id).once("value", function(snapshot) {
-        if(snapshot.val() == null) {
-            res.send("Transaction id error");
-        } else {
-            res.json(snapshot.val())
-        }
-    });
-}
+function getTransaction(req, ref) {
+    let queryRef = null;
 
-function getTransaction(userID) {
-    let id = userID;
-    transactionsRef.child(id).once("value", function(snapshot) {
-        if(snapshot.val() == null) {
-            res.send("Transaction id error");
-        } else {
-            res.json(snapshot.val())
-        }
+    if(req.body.isSingleTransaction) {
+        queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.body.listingID + "_" + req.body.renterID + "_" + req.body.closed);
+    } else {
+        queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
+    }
+
+    var keyArray = [];
+
+    queryRef.once("value").then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            //.child to get renterid
+            var key = childSnapshot.key;
+            keyArray.push(key);
+        });
+        res.json(keyArray);
     });
 }
 
@@ -33,10 +32,12 @@ function newTransaction(req, res) {
         startTime: Date.now(),
         endTime: Date.now(),
         ownerConfirmed: false,
-		renterConfirmed: true,
-		ownerClosed: false,
-		renterClosed: false,
-		closed: false
+        renterConfirmed: true,
+        ownerClosed: false,
+        renterClosed: false,
+        closed: false,
+        listingID_closed: req.body.listingID + "_" + false,
+        listingID_renterID_closed: req.body.listingID + "_" + req.body.renterID + "_" + false
 
     }, function(err) {
         if(err){
@@ -70,30 +71,4 @@ function deleteTransaction(req, res) {
     });
 }
 
-function setOwnerConfirmedTrue(req, res){
-    //Changes the alert to have been read
-    let id = req.param.id;
-    alertsRef.child(id).child('ownerConfirmed').set(true);
-    alertsRef.child(id).child('renterConfirmed').set(false);
-}
-
-function setRenterConfirmedTrue(req, res){
-    //Changes the alert to have been read
-    let id = req.param.id;
-    alertsRef.child(id).child('renterConfirmed').set(true);
-    alertsRef.child(id).child('startTime').set(Date.now());
-}
-
-function setOwnerClosedTrue(req, res){
-    //Changes the alert to have been read
-    let id = req.param.id;
-    alertsRef.child(id).child('ownerClosed').set(true);
-}
-
-function setRenterClosedTrue(req, res){
-    //Changes the alert to have been read
-    let id = req.param.id;
-    alertsRef.child(id).child('renterClosed').set(true);
-}
-
-module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction, setOwnerConfirmedTrue, setRenterConfirmedTrue, setOwnerClosedTrue, setRenterClosedTrue};
+module.exports = {getTransaction, newTransaction, updateTransaction, deleteTransaction};

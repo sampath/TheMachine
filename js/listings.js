@@ -9,6 +9,8 @@ function getAllListings(req, res){
 }
 
 function getListings(req, res) {
+    let queryRef = null;
+
     let queryRef = listingsRef.orderByChild(req.query.orderBy) // add default key to order by
         .startAt(req.query.minVal || 0)
         .endAt(req.query.maxVal || 1000000);
