@@ -1,13 +1,15 @@
 var database = require('./db.js');
 var transactionsRef = database.db.ref("transactions");
 
-function getTransaction(req, ref) {
+// Query strings:
+// single=&listingID=&renterID=&closed=
+function getTransaction(req, res) {
     let queryRef = null;
 
-    if(req.body.isSingleTransaction) {
-        queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.body.listingID + "_" + req.body.renterID + "_" + req.body.closed);
+    if(req.query.single == "true") {
+        queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.body.closed);
     } else {
-        queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
+        queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
     }
 
     var keyArray = [];

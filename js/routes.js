@@ -45,6 +45,11 @@ function createRoutes (router) {
 	    .get(transactions.getTransaction)
 	    .post(transactions.newTransaction)
 	    .patch(transactions.updateTransaction)
+		.delete(transactions.deleteTransaction);
+	router.route('/transactions/')
+	    .get(transactions.getTransaction)
+	    .post(transactions.newTransaction)
+	    .patch(transactions.updateTransaction)
 	    .delete(transactions.deleteTransaction);
 
 	// Test routing
