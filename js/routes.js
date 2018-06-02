@@ -42,7 +42,7 @@ function createRoutes (router) {
 
 	//Transactions requests
 	router.route('/transactions/:id')
-	    .get(transactions.getTransaction)
+	    .get(transactions.getSingleTransaction)
 	    .post(transactions.newTransaction)
 	    .patch(transactions.updateTransaction)
 		.delete(transactions.deleteTransaction);
@@ -50,7 +50,7 @@ function createRoutes (router) {
 	    .get(transactions.getTransaction)
 	    .post(transactions.newTransaction)
 	    .patch(transactions.updateTransaction)
-	    .delete(transactions.deleteTransaction);
+	    .delete(transactions.deleteTransaction);	
 
 	// Test routing
 	// Go to localhost:3000/test
