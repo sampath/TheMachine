@@ -2,7 +2,13 @@ var database = require('./db.js');
 var transactionsRef = database.db.ref("transactions");
 
 function getTransaction(req, ref) {
-    let queryRef = transactionsRef.orderByChild("listingID_ownerID_renterID_closed").equalTo(req.body.listingID + "_" + req.body.ownerID + "_" + req.body.renterID + "_" + req.body.closed);
+    let queryRef = null;
+
+    if(req.body.isSingleTransaction) {
+        queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.body.listingID + "_" + req.body.renterID + "_" + req.body.closed);
+    } else {
+        queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
+    }
 
     var keyArray = [];
 
@@ -11,9 +17,8 @@ function getTransaction(req, ref) {
             var key = childSnapshot.key;
             keyArray.push(key);
         });
+        res.json(keyArray);
     });
-
-    return keyArray;
 }
 
 function newTransaction(req, res) {
@@ -30,7 +35,8 @@ function newTransaction(req, res) {
         ownerClosed: false,
         renterClosed: false,
         closed: false,
-        listingID_ownerID_renterID_closed: req.body.listingID + "_" + req.body.ownerID + "_" + req.body.renterID + "_" + false
+        listingID_closed: req.body.listingID + "_" + false,
+        listingID_renterID_closed: req.body.listingID + "_" + req.body.renterID + "_" + false
 
     }, function(err) {
         if(err){
