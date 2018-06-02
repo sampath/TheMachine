@@ -1,5 +1,5 @@
 //import db from "../server.js"
-var server = require('../server.js');
+var server = require('./db.js');
 var listingsRef = server.db.ref("listings");
 
 function getAllListings(req, res){

@@ -1,6 +1,6 @@
-//Require server and alert
-var server = require('../server');
-var alertsRef = server.db.ref("alerts");
+//Require database and alert
+var database = require('./db.js');
+var alertsRef = database.db.ref("alerts");
 
 function getAlert(req, res){
     //Gets the alerts specific to the the userID
