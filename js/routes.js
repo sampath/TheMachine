@@ -43,14 +43,12 @@ function createRoutes (router) {
 	//Transactions requests
 	router.route('/transactions/:id')
 	    .get(transactions.getSingleTransaction)
-	    .post(transactions.newTransaction)
 	    .patch(transactions.updateTransaction)
 		.delete(transactions.deleteTransaction);
 	router.route('/transactions/')
-	    .get(transactions.getTransaction)
-	    .post(transactions.newTransaction)
-	    .patch(transactions.updateTransaction)
-	    .delete(transactions.deleteTransaction);	
+	    .get(transactions.getTransactions)
+		.post(transactions.newTransaction)
+		.delete(transactions.selectRenter);	
 
 	// Test routing
 	// Go to localhost:3000/test
@@ -76,7 +74,7 @@ function createRoutes (router) {
 	    .post(reviews.newReview);
 	router.route('/test/transactions')
 	    .post(transactions.newTransaction)
-	    .get(transactions.getTransaction)
+	    .get(transactions.getTransactions)
 }
 
 module.exports = {createRoutes};
