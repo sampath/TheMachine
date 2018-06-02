@@ -14,6 +14,7 @@ function getTransaction(req, ref) {
 
     queryRef.once("value").then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
+            //.child to get renterid
             var key = childSnapshot.key;
             keyArray.push(key);
         });
