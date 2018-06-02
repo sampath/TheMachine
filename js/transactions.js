@@ -18,7 +18,9 @@ function getTransaction(req, res) {
         snapshot.forEach(function(childSnapshot) {
             //.child to get renterid
             var key = childSnapshot.key;
-            keyArray.push(key);
+            renterID = childSnapshot.child("renterID");
+            keyArray.push(renterID);
+
         });
         res.json(keyArray);
     });
