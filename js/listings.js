@@ -94,7 +94,7 @@ function newListing(req, res) {
         }
     });
 
-    uploadFile(""+"https://firebasestorage.googleapis.com/v0/b/flick-b0e2c.appspot.com/o/C%3A%5CUsers%5Cdell%5CDesktop%5CCSE110%5CTheMachine%5CBackend%5Cjs%2FTest.jpg?alt=media&token=a08f726d-163d-4d09-9006-5396fe900d59", metadata, pushedRef.key);
+    // uploadFile(""+"https://firebasestorage.googleapis.com/v0/b/flick-b0e2c.appspot.com/o/C%3A%5CUsers%5Cdell%5CDesktop%5CCSE110%5CTheMachine%5CBackend%5Cjs%2FTest.jpg?alt=media&token=a08f726d-163d-4d09-9006-5396fe900d59", metadata, pushedRef.key);
 }
 
 function updateListing(req, res) {
