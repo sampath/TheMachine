@@ -6,7 +6,7 @@ var listingsRef = database.db.ref("listings");
 //Posts a new Rating
 // need to somehow update ratings fields in listings and transactions
 function newReview(req, res){
-    var stars = req.body.stars;
+    var stars = parseInt(req.body.stars);
     //TODO:Get the rating specific to the userID
     //TODO: renter submit, change owner and listing avgRating
     //TODO: owner submit, change renter's average rating
@@ -17,7 +17,7 @@ function newReview(req, res){
     var listingAvgRating = null;
     var numListingRatings = null;
 
-    if(req.body.isOwner) {
+    if(req.body.isOwner == 'true') {
         // gets the snapshot of the user with the inputted userID
         usersRef.child(req.body.userID).once("value").then(function(snapshot) {
 
