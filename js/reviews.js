@@ -34,7 +34,7 @@ function newReview(req, res){
             // updates the updated rating and number of ratings for the renter
             usersRef.child(req.body.userID).child('numRenterRatings').set(numRenterRatings);
             usersRef.child(req.body.userID).child('renterAvgRating').set(renterAvgRating);
-        }
+        });
     } else {
         usersRef.child(req.body.userID).once("value").then(function(snapshot) {
             ownerAvgRating = snapshot.child("ownerAvgRating").val();
@@ -43,7 +43,7 @@ function newReview(req, res){
             ownerAvgRating = ((ownerAvgRating * (numOwnerRatings - 1)) + stars) / numOwnerRatings;
             usersRef.child(req.body.userID).child('numOwnerRatings').set(numOwnerRatings);
             usersRef.child(req.body.userID).child('ownerAvgRating').set(ownerAvgRating);
-        }
+        });
         listingsRef.child(req.body.listingID).once("value").then(function(snapshot) {
             listingAvgRating = snapshot.child("avgRating").val();
             numListingRatings = snapshot.child("numListingRatings").val();
@@ -51,7 +51,7 @@ function newReview(req, res){
             listingAvgRating = ((listingAvgRating * (numListingRatings - 1)) + stars) / numListingRatings;
             listingsRef.child(req.body.listingID).child('numListingRatings').set(numListingRatings);
             listingsRef.child(req.body.listingID).child('avgRating').set(listingAvgRating);
-        }
+        });
     }
 
     //TODO: Calculate the new rating and add patch it
