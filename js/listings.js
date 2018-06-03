@@ -9,9 +9,7 @@ function getAllListings(req, res){
 }
 
 function getListings(req, res) {
-    let queryRef = listingsRef.orderByChild(req.query.orderBy) // add default key to order by
-        .startAt(req.query.minVal || 0)
-        .endAt(req.query.maxVal || 1000000);
+    let queryRef = listingsRef.orderByChild(req.query.orderBy); // add default key to order by
     if (req.query.onlyAvailable) {
         queryRef = queryRef.equalTo(1, 'availability')
     }
@@ -38,6 +36,7 @@ function getListings(req, res) {
 function getListing(req, res) {
     let id = req.params.id;
     listingsRef.child(id).once("value", snapshot => {
+        console.log(snapshot.val());
         if(snapshot.val() == null) {
             res.send("User id error");
         } else {
@@ -85,9 +84,11 @@ function newListing(req, res) {
         price: req.body.price,
         availability: 1,
         description: req.body.description,
-        endTime: '?',
+        // endTime: '?',
         pictureURL: '?',
-        avgRating: 0.0
+        avgRating: 0.0,
+        numListingRatings: 0
+
     }, err => {
         if(err){
             res.send(err)
@@ -97,7 +98,12 @@ function newListing(req, res) {
     uploadFile(""+"https://firebasestorage.googleapis.com/v0/b/flick-b0e2c.appspot.com/o/C%3A%5CUsers%5Cdell%5CDesktop%5CCSE110%5CTheMachine%5CBackend%5Cjs%2FTest.jpg?alt=media&token=a08f726d-163d-4d09-9006-5396fe900d59", metadata, pushedRef.key);
 }
 
+/*
+ * Working patch callback method
+ */
 function updateListing(req, res) {
+    console.log("in update function");
+    console.log("printing req.params.id: " + req.params.id);
     let id = req.params.id;
     listingsRef.child(id).once("value", snapshot => {
         var listing = snapshot.val();
@@ -117,6 +123,8 @@ function updateListing(req, res) {
 }
 
 function deleteListing(req, res) {
+    console.log("in delete function");
+    console.log("printing req.params.id: " + req.params.id);
     let id = req.params.id;
     listingsRef.child(id).remove(err => {
         if(err) {
