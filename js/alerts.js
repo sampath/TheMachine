@@ -17,7 +17,7 @@ function getAlert(req, res){
 function postAlert(req, res){
     //Pushes the alert to the database
     alertsRef.push({
-      content : req.body.content,
+      content : req.param.content,
       time : Date.now(),
       read : false
     });
