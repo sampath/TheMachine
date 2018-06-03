@@ -9,9 +9,7 @@ function getAllListings(req, res){
 }
 
 function getListings(req, res) {
-    let queryRef = listingsRef.orderByChild(req.query.orderBy) // add default key to order by
-        .startAt(req.query.minVal || 0)
-        .endAt(req.query.maxVal || 1000000);
+    let queryRef = listingsRef.orderByChild(req.query.orderBy); // add default key to order by
     if (req.query.onlyAvailable) {
         queryRef = queryRef.equalTo(1, 'availability')
     }
@@ -38,6 +36,7 @@ function getListings(req, res) {
 function getListing(req, res) {
     let id = req.params.id;
     listingsRef.child(id).once("value", snapshot => {
+        console.log(snapshot.val());
         if(snapshot.val() == null) {
             res.send("User id error");
         } else {
@@ -97,23 +96,27 @@ function newListing(req, res) {
     uploadFile(""+"https://firebasestorage.googleapis.com/v0/b/flick-b0e2c.appspot.com/o/C%3A%5CUsers%5Cdell%5CDesktop%5CCSE110%5CTheMachine%5CBackend%5Cjs%2FTest.jpg?alt=media&token=a08f726d-163d-4d09-9006-5396fe900d59", metadata, pushedRef.key);
 }
 
+/*
+ * Working patch callback method
+ */
 function updateListing(req, res) {
     let id = req.params.id;
-    let listing = {};
-    console.log(typeof req.body);
-    for (property in req.body) {
-        if (req.body.property != null)
-            listing[property] = req.body.property;
-    };
-    console.log(id);
-    let listing_node = listingsRef.child(id);
-    console.log(listing_node);
-    listingsRef.child(id).update(listing, function(err) {
-        if(err) {
-            res.send(err)
+    listingsRef.child(id).once("value", snapshot => {
+        var listing = snapshot.val();
+        for (property in req.body) {
+            console.log(req.body[property] + " " + property);
+            if (req.body[property] != '') {
+                listing[property] = req.body[property];
+            }
         }
+        listingsRef.child(id).update(listing, err => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send("Successfully Updated")
+            }
+        });
     });
-    console.log(listingsRef.child(id))
 }
 
 function deleteListing(req, res) {
