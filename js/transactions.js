@@ -2,24 +2,18 @@ var database = require('./db.js');
 var transactionsRef = database.db.ref("transactions");
 
 // ?renterID=&listingID
-function selectRenter(req, res){
+function selectRenter(params, res){
     // Deletes all renters interested in the item EXCEPT for given renter
-    let renter = req.query.renterID;
-    let listing = req.query.listingID;
+    let renter = params['renterID'];
+    let listing = params['listingID'];
 
-    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(listing + "_false");
+    let queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(listing + "_false");
 
     queryRef.once("value").then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
             var childRenterID = childSnapshot.child("renterID").val();
             if(childRenterID!=renter){
-                transactionsRef.child(childSnapshot.key).remove(function(err){
-                    if(err){
-                        res.send(err);
-                    }else{
-                        res.json();
-                    }
-                });
+                _deleteTransaction(childSnapshot.key, res);
             }
         });
     });
@@ -40,13 +34,12 @@ function getSingleTransaction(req, res) {
 // Query strings:
 // ?listingID=&closed=
 function getTransactions(req, res) {
-    let queryRef = null;
-    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
+    let queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
 
     var keyArray = [];
 
     queryRef.once("value").then(function(snapshot) {
-        keyArray = snapshot.val()
+        keyArray = snapshot.val();
         // snapshot.forEach(function(childSnapshot) {
         //     //.child to get renterid
         //     var key = childSnapshot.key;
@@ -57,13 +50,13 @@ function getTransactions(req, res) {
 }
 
 // ?listingID=&ownerID=&renterID=&price=
-function newTransaction(req, res) {
+function renterInterested(params, res) {
 
     transactionsRef.push({
-        listingID: req.body.listingID,
-        ownerID: req.body.ownerID, //user id of the owner,
-        renterID: req.body.renterID, //current user,
-        price: req.body.price,
+        listingID: params['listingID'],
+        ownerID: params['ownerID'], //user id of the owner,
+        renterID: params['renterID'], //current user,
+        price: params['price'],
         startTime: Date.now(),
         endTime: Date.now(),
         ownerConfirmed: false,
@@ -71,8 +64,8 @@ function newTransaction(req, res) {
         ownerClosed: false,
         renterClosed: false,
         closed: false,
-        listingID_closed: req.body.listingID + "_" + false,
-        listingID_renterID_closed: req.body.listingID + "_" + req.body.renterID + "_" + false
+        listingID_closed: params['listingID'] + "_" + false,
+        listingID_renterID_closed: params['listingID'] + "_" + params['renterID'] + "_" + false
 
     }, function(err) {
         if(err){
@@ -81,29 +74,61 @@ function newTransaction(req, res) {
     });
 }
 
-function updateTransaction(req, res) {
-    let id = req.params.id;
-    let transaction = {};
-    req.body.keys.forEach((param) => {
-        transaction[param] = req.body[param];
-    });
-    transactionsRef.child(id).update(transaction, function(err) {
-        if(err) {
-            res.send(err)
-        }
-    });
-    res.json();
-}
-
-function deleteTransaction(req, res) {
-    let id = req.params.id;
+function _deleteTransaction(transactionID, res) {
+    let id = transactionID;
     transactionsRef.child(id).remove(function(err) {
         if(err) {
             res.send(err);
-        } else {
-            res.json();
         }
     });
 }
 
-module.exports = {getTransactions, newTransaction, updateTransaction, deleteTransaction, getSingleTransaction, selectRenter};
+function renterConfirm(params, res) {
+    let transactionID = params['transactionID'];
+    let renterConfirmed = {renterConfirmed: true};
+    transactionsRef.child(transactionID).update(renterConfirmed, err => {
+        if (err) {
+            res.send(err)
+        } else {
+            res.send('Renting period started.')
+        }
+    });
+}
+
+function renterClose(params, res) {
+    let renter = params['renterID'];
+    let listing = params['listingID'];
+    let transaction;
+
+    let queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(listing + '_' + renter + '_false');
+    // Get transaction id
+    queryRef.once("value", snapshot => {
+        snapshot.forEach(childSnapshot => {
+            transaction = childSnapshot.key;
+        });
+    }).then(() => {
+        let renterClosed = {renterClosed: true};
+        transactionsRef.child(transaction).update(renterClosed, err => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send("Request to end rental period sent to owner.")
+            }
+        });
+    });
+}
+
+function ownerClose(params, res) {
+    let transactionID = params['transactionID'];
+    let ownerClosed = {ownerClosed: true};
+
+    transactionsRef.child(transactionID).update(ownerClosed, err => {
+        if (err) {
+            res.send(err)
+        } else {
+            res.send("Rental period ended.")
+        }
+    });
+}
+
+module.exports = {getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
