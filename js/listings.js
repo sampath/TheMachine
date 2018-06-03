@@ -98,6 +98,8 @@ function newListing(req, res) {
 }
 
 function updateListing(req, res) {
+    console.log("in update function");
+    console.log("printing req.params.id: " + req.params.id);
     let id = req.params.id;
     let listing = {};
     console.log(typeof req.body);
@@ -117,6 +119,8 @@ function updateListing(req, res) {
 }
 
 function deleteListing(req, res) {
+    console.log("in delete function");
+    console.log("printing req.params.id: " + req.params.id);
     let id = req.params.id;
     listingsRef.child(id).remove(err => {
         if(err) {
