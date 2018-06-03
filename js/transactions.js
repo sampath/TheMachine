@@ -11,7 +11,8 @@ function selectRenter(req, res){
 
     queryRef.once("value").then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            if(childSnapshot.child("renterID")!=renter){
+            var childRenterID = childSnapshot.child("renterID").val();
+            if(childRenterID!=renter){
                 transactionsRef.child(childSnapshot.key).remove(function(err){
                     if(err){
                         res.send(err);
@@ -45,11 +46,12 @@ function getTransactions(req, res) {
     var keyArray = [];
 
     queryRef.once("value").then(function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-            //.child to get renterid
-            var key = childSnapshot.key;
-            keyArray.push(key);
-        });
+        keyArray = snapshot.val()
+        // snapshot.forEach(function(childSnapshot) {
+        //     //.child to get renterid
+        //     var key = childSnapshot.key;
+        //     keyArray.push(key);
+        // });
         res.json(keyArray);
     });
 }
