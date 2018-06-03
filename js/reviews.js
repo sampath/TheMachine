@@ -19,7 +19,7 @@ function newReview(req, res){
 
     if(req.body.isOwner) {
         // gets the snapshot of the user with the inputted userID
-        usersRef.child(req.body.userID).once("value").then(function(snapshot)) {
+        usersRef.child(req.body.userID).once("value").then(function(snapshot) {
 
             // saves the values of the avg rating and number of ratings for renters into the values
             renterAvgRating = snapshot.child("renterAvgRating").val();
@@ -36,7 +36,7 @@ function newReview(req, res){
             usersRef.child(req.body.userID).child('renterAvgRating').set(renterAvgRating);
         }
     } else {
-        usersRef.child(req.body.userID).once("value").then(function(snapshot)) {
+        usersRef.child(req.body.userID).once("value").then(function(snapshot) {
             ownerAvgRating = snapshot.child("ownerAvgRating").val();
             numOwnerRatings = snapshot.child("numOwnerRatings").val();
             numOwnerRatings += 1;
@@ -44,7 +44,7 @@ function newReview(req, res){
             usersRef.child(req.body.userID).child('numOwnerRatings').set(numOwnerRatings);
             usersRef.child(req.body.userID).child('ownerAvgRating').set(ownerAvgRating);
         }
-        listingsRef.child(req.body.listingID).once("value").then(function(snapshot)) {
+        listingsRef.child(req.body.listingID).once("value").then(function(snapshot) {
             listingAvgRating = snapshot.child("avgRating").val();
             numListingRatings = snapshot.child("numListingRatings").val();
             numListingRatings += 1;
