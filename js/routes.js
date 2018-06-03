@@ -29,7 +29,7 @@ function createRoutes (router) {
 	    .patch(listings.updateListing)
 	    .delete(listings.deleteListing);
 
-	// Reviewss requests
+	// Reviews requests
 	router.route('/reviews/:id')
 	    .get(reviews.getReview);
 	router.route('/reviews')
@@ -38,7 +38,8 @@ function createRoutes (router) {
 	//Alerts requests
 	router.route('/alerts/:id')
 	    .get(alerts.getAlert)
-	    .post(alerts.postAlert);
+	    .post(alerts.postAlert)
+        .patch(alerts.setAlertToRead);
 
 	//Transactions requests
 	router.route('/transactions/:id')
@@ -48,7 +49,7 @@ function createRoutes (router) {
 	router.route('/transactions/')
 	    .get(transactions.getTransactions)
 		.post(transactions.newTransaction)
-		.delete(transactions.selectRenter);	
+		.delete(transactions.selectRenter);
 
 	// Test routing
 	// Go to localhost:3000/test
