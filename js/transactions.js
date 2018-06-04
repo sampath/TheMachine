@@ -18,16 +18,24 @@ function getSingleTransaction(req, res) {
 function getTransactions(req, res) {
 
     let queryRef = null;
-
+    // try transactionsref for each loop and then go through, check each child, and then try and add that to array, if the array size is empty, then return true, if it isn't then return false
     if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-        queryRef.once("value", function(snapshot) {
-            if(snapshot.exists()) {
-                res.json(false);
-            } else {
-                res.json(true);
-            }
-        });
+        console.log(queryRef.isEqual(null));
+        if(queryRef.isEqual(null)) {
+            res.json(false);
+        } else {
+            res.json(true);
+        }
+        // queryRef.once("value", function(snapshot) {
+        //     console.log(snapshot.val());
+        //     console.log(snapshot.exists());
+            // if(snapshot.exists()) {
+            //     res.json(false);
+            // } else {
+            //     res.json(true);
+            // }
+        // });
         // if(queryRef == null) {
         //     res.json(false);
         // } else {
