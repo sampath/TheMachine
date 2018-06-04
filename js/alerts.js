@@ -34,7 +34,8 @@ function postAlert(req, res){
       content : req.body.content,
       time : Date.now(),
       read : false,
-      transactionID: req.body.transactionID
+      transactionID: req.body.transactionID,
+      listingID: req.body.listingID
     });
 }
 
