@@ -180,6 +180,37 @@ function renterClose(req, res) {
     });
 }
 
+function getUserTransactions(req, res){
+    let id = req.params.id;
+    let ownerQuery = transactionsRef.orderByChild("ownerID").equalTo(id);
+    let renterQuery = transactionsRef.orderByChild("renterID").equalTo(id);
+
+    var transactionsArray = "";
+
+    ownerQuery.once("value").then(function(snapshot) {
+      //  transactionsArray = new Array(snapshot.val())
+        let ownerArray = [];
+        snapshot.forEach(function(item) {
+            ownerArray.push(item);
+        });
+        renterQuery.once("value").then(function(snapshot2) {
+            snapshot2.forEach(function(item2){
+                ownerArray.push(item2);
+            });
+
+            res.json(ownerArray);
+            // let renterArray = [];
+            // renterArray = snapshot2.val();
+            // for(var i = 0; i < ownerArray.length; i++) {
+            //     renterArray += ownerArray[i];
+                
+            // }
+            // //console.log(ownerArray[0]);
+            // res.json(renterArray);
+        });
+    });
+}
+
 /*
  *  req {
  *      body {
@@ -211,4 +242,4 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+module.exports = {getUserTransactions, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
