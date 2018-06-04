@@ -4,8 +4,8 @@ var transactionsRef = database.db.ref("transactions");
 // ?renterID=&listingID
 function selectRenter(req, res){
     // Deletes all renters interested in the item EXCEPT for given renter
-    let renter = req.query.renterID;
-    let listing = req.query.listingID;
+    let renter = req.body.renterID;
+    let listing = req.body.listingID;
 
     queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(listing + "_false");
 
@@ -41,7 +41,7 @@ function getSingleTransaction(req, res) {
 // ?listingID=&closed=
 function getTransactions(req, res) {
     let queryRef = null;
-    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
+    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
 
     var keyArray = [];
 

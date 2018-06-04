@@ -9,8 +9,8 @@ function getAllListings(req, res){
 }
 
 function getListings(req, res) {
-    let queryRef = listingsRef.orderByChild(req.query.orderBy); // add default key to order by
-    if (req.query.onlyAvailable) {
+    let queryRef = listingsRef.orderByChild(req.body.orderBy); // add default key to order by
+    if (req.body.onlyAvailable) {
         queryRef = queryRef.equalTo(1, 'availability')
     }
     // Search descriptions for keyword matches
@@ -22,7 +22,7 @@ function getListings(req, res) {
             //let wordsToSearch = listing.child('tags')
             let wordsToSearch = listing.child('description').split(' ');
             wordsToSearch[wordsToSearch.length - 1] = wordsToSearch[description.length - 1].split('.')[0];
-            if (!wordsToSearch.some(t => req.query.searchWords.includes(t))) {
+            if (!wordsToSearch.some(t => req.body.searchWords.includes(t))) {
                 listingArray = listingArray.splice(index, 1);
                 index--;
             }
@@ -80,7 +80,7 @@ function newListing(req, res) {
     var pushedRef = listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
-        ownerID: '?',
+        ownerID: req.body.ownerID,
         price: req.body.price,
         availability: 1,
         description: req.body.description,
