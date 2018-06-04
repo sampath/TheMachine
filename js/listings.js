@@ -80,12 +80,12 @@ function newListing(req, res) {
     var pushedRef = listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
-        ownerID: '?',
+        ownerID: req.body.ownerID,
         price: req.body.price,
         availability: 1,
         description: req.body.description,
         // endTime: '?',
-        pictureURL: '?',
+        pictureURL: req.body.pictureURL,
         avgRating: 0.0,
         numListingRatings: 0
 
@@ -95,7 +95,7 @@ function newListing(req, res) {
         }
     });
 
-    uploadFile(""+"https://firebasestorage.googleapis.com/v0/b/flick-b0e2c.appspot.com/o/C%3A%5CUsers%5Cdell%5CDesktop%5CCSE110%5CTheMachine%5CBackend%5Cjs%2FTest.jpg?alt=media&token=a08f726d-163d-4d09-9006-5396fe900d59", metadata, pushedRef.key);
+    uploadFile(""+req.body.pictureURL, metadata, pushedRef.key);
 }
 
 /*

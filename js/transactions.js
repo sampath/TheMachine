@@ -12,22 +12,35 @@ function getSingleTransaction(req, res) {
     });
 }
 
+//TODO pass in listing + userID, check if there is a transaction under that name
 // Query strings:
-// ?listingID=&closed=
+// ?check=&listingID=&closed=
 function getTransactions(req, res) {
-    let queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
 
-    var keyArray = [];
+    let queryRef = null;
 
-    queryRef.once("value").then(function(snapshot) {
-        keyArray = snapshot.val();
-        // snapshot.forEach(function(childSnapshot) {
-        //     //.child to get renterid
-        //     var key = childSnapshot.key;
-        //     keyArray.push(key);
-        // });
-        res.json(keyArray);
-    });
+    if(req.query.check) {
+        queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
+        if(queryRef == null) {
+            res.json(false);
+        } else {
+            res.json(true);
+        }
+    } else {
+        queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
+
+        var keyArray = [];
+
+        queryRef.once("value").then(function(snapshot) {
+            keyArray = snapshot.val()
+            // snapshot.forEach(function(childSnapshot) {
+            //     //.child to get renterid
+            //     var key = childSnapshot.key;
+            //     keyArray.push(key);
+            // });
+            res.json(keyArray);
+        });
+    }
 }
 
 /*
