@@ -44,6 +44,7 @@ function getTransactions(req, res) {
 
     if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
+        console.log(queryRef);
         if(queryRef == null) {
             res.json(false);
         } else {
