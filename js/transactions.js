@@ -44,12 +44,19 @@ function getTransactions(req, res) {
 
     if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-        console.log(queryRef);
-        if(queryRef == null) {
-            res.json(false);
-        } else {
-            res.json(true);
-        }
+        queryRef.addValueEventListener(new ValueEventListener() {
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.exists()) {
+                    res.json(true);
+                } else {
+                    res.json(false);
+                }
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
     } else {
         queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
 
