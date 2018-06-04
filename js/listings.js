@@ -85,7 +85,7 @@ function newListing(req, res) {
         availability: 1,
         description: req.body.description,
         // endTime: '?',
-        pictureURL: req.body.pictureURL,
+        pictureURL: '?',
         avgRating: 0.0,
         numListingRatings: 0
 
@@ -94,7 +94,9 @@ function newListing(req, res) {
             res.send(err)
         }
     });
-
+    console.log(req.body.pictureURL);
+    firebase.storage().ref('/images/').child('req.body.itemName'+.jpg)
+    .putString(req.body.picturePath, ‘base64’, {contentType:’image/jpg’});
     uploadFile(""+req.body.pictureURL, metadata, pushedRef.key);
 }
 
