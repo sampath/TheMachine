@@ -77,6 +77,7 @@ function newListing(req, res) {
         id: '1234'
     };
 
+    console.log(req.body);
     var pushedRef = listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
