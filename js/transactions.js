@@ -41,7 +41,7 @@ function getSingleTransaction(req, res) {
 // ?listingID=&closed=
 function getTransactions(req, res) {
     let queryRef = null;
-    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.body.listingID + "_" + req.body.closed);
+    queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
 
     var keyArray = [];
 
