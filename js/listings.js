@@ -129,6 +129,8 @@ function deleteListing(req, res) {
     listingsRef.child(id).remove(err => {
         if(err) {
             res.send(err);
+        } else {
+            res.json();
         }
     });
 }
