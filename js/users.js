@@ -20,7 +20,7 @@ function getUser(req, res) {
 }
 
 function newUser(req, res) {
-    usersRef.push({
+    database.db.ref('users/' + req.body.userID).set({
         name: req.body.name,//req.body.name,
         registrationDate: Date.now(),
         email: req.body.email,
