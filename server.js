@@ -20,5 +20,6 @@ module.exports = {app};
 //Init Application
 app.use('/', router);
 app.listen(process.env.PORT || 3000, () => {
-    console.log('server started at http://localhost:3000/');
+    console.log('Server Started');
+    console.log('Backend > Frontend')
 });

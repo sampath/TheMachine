@@ -22,7 +22,6 @@ function getUser(req, res) {
 }
 
 function newUser(req, res) {
-    console.log(req.body);
     database.db.ref('users/' + req.body.userID).set({
         name: req.body.name,//req.body.name,
         registrationDate: Date.now(),
