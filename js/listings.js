@@ -80,7 +80,7 @@ function newListing(req, res) {
     var pushedRef = listingsRef.push({
         itemName: req.body.itemName,
         tags: req.body.tags,
-        ownerID: '?',
+        ownerID: req.body.ownerID,
         price: req.body.price,
         availability: 1,
         description: req.body.description,
