@@ -41,6 +41,8 @@ function createRoutes (router) {
         .get(transactions.getTransactions);
     router.route('/transactions/:id')
         .get(transactions.getSingleTransaction);
+    router.route('/transactions/user/:id')
+        .get(transactions.getUserTransactions);
 
     // Other backend entry points
     router.post('/renterinterested', transactions.renterInterested);
