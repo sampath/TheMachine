@@ -85,7 +85,7 @@ function newListing(req, res) {
         availability: 1,
         description: req.body.description,
         // endTime: '?',
-        pictureURL: req.body.pictureURL,
+        pictureURL: '?',
         avgRating: 0.0,
         numListingRatings: 0
 
@@ -95,7 +95,7 @@ function newListing(req, res) {
         }
     });
 
-    uploadFile(""+req.body.pictureURL, metadata, pushedRef.key);
+    uploadFile(""+req.body.picturePath, metadata, pushedRef.key);
 }
 
 /*

@@ -19,13 +19,20 @@ function getTransactions(req, res) {
 
     let queryRef = null;
 
-    if(req.query.check) {
+    if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-        if(queryRef == null) {
-            res.json(false);
-        } else {
-            res.json(true);
-        }
+        queryRef.once("value", function(snapshot) {
+            if(snapshot.exists()) {
+                res.json(false);
+            } else {
+                res.json(true);
+            }
+        });
+        // if(queryRef == null) {
+        //     res.json(false);
+        // } else {
+        //     res.json(true);
+        // }
     } else {
         queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
 
