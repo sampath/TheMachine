@@ -12,7 +12,9 @@ function getUser(req, res) {
     let id = req.params.id;
     usersRef.child(id).once("value", function(snapshot) {
         if(snapshot.val() == null) {
-            res.send("User id error");
+            res.send({
+                error: 1
+            });
         } else {
             res.json(snapshot.val())
         }
