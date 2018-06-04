@@ -50,9 +50,12 @@ function createRoutes (router) {
 
        //Alerts requests
     router.route('/alerts/:id')
-        .get(alerts.getAlert)
+        .get(alerts.getAlerts)
         .post(alerts.postAlert)
         .patch(alerts.setAlertToRead);
+
+    router.route('/alerts/user/:userID/single/:alertID')
+        .get(alerts.getAlert);
 
         // Test routing
     // Go to localhost:3000/test
