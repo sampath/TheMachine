@@ -28,6 +28,8 @@ function createRoutes (router) {
         .get(listings.getListing)
         .patch(listings.updateListing)
         .delete(listings.deleteListing);
+    router.route('/listings/user/:id')
+        .get(listings.getUserListings);
 
     // Reviews requests
     router.route('/reviews/:id')

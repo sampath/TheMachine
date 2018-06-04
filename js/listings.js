@@ -171,4 +171,16 @@ function deleteListing(req, res) {
     });
 }
 
-module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings};
+function getUserListings(req,res){
+    let id = req.params.id;
+    let queryRef = listingsRef.orderByChild("ownerID").equalTo(id);
+
+    var listingsArray = [];
+
+    queryRef.once("value").then(function(snapshot) {
+        listingsArray = snapshot.val()
+        res.json(listingsArray);
+    });
+}
+
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings, getUserListings};
