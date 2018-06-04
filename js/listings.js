@@ -1,6 +1,7 @@
 //import db from "../server.js"
 var server = require('./db.js');
 var listingsRef = server.db.ref("listings");
+var stream = require("stream");
 
 function getAllListings(req, res){
     listingsRef.once("value", (snapshot, prevChildKey) => {
@@ -71,6 +72,42 @@ function uploadFile(file, metadata, id) {
     })
 }
 
+/*Function uploads a picture to the storage*/
+function uploadPicture(base64, postId, uid, err) {
+  if(!err){
+    let bufferStream = new stream.PassThrough();
+    bufferStream.end(new Buffer.from(base64, 'base64'));
+
+    // Retrieve default storage bucket
+    let bucket = server.bucket;
+
+    // Create a reference to the new image file
+    let file = bucket.file(`/images/${uid}_${postId}.jpg`);
+
+    bufferStream.pipe(file.createWriteStream({
+      metadata: {
+        contentType: 'image/jpeg'
+      }
+    }))
+    .on('error', error => {
+      reject(`news.provider#uploadPicture - Error while uploading picture ${JSON.stringify(error)}`);
+    })
+    .on('finish', (uploadedFile) => {
+      // The file upload is complete.
+      //Adding the URL to the database
+       file.getSignedUrl({
+          action: 'read',
+          expires: '03-17-2025'
+        }).then(signedUrls => {
+          listingsRef.child(uid).child('pictureURL').set(signedUrls[0]);
+        });
+
+    });
+    } else {//}
+      console.log(err);
+    }
+};
+
 function newListing(req, res) {
 
     var metadata = {
@@ -94,10 +131,7 @@ function newListing(req, res) {
             res.send(err)
         }
     });
-    console.log(req.body.pictureURL);
-    firebase.storage().ref('/images/').child('req.body.itemName'+.jpg)
-    .putString(req.body.picturePath, ‘base64’, {contentType:’image/jpg’});
-    uploadFile(""+req.body.pictureURL, metadata, pushedRef.key);
+    uploadPicture(req.body.picturePath+"",req.body.itemName+"",pushedRef.key);
 }
 
 /*
