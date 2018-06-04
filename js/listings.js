@@ -95,7 +95,10 @@ function newListing(req, res) {
         }
     });
 
-    uploadFile(""+req.body.picturePath, metadata, pushedRef.key);
+    firebase.storage().ref('/images/').child(req.body.itemName+'.jpg')
+    .putString(req.body.picturePath, 'base64', {contentType:'image/jpg'});
+
+    //uploadFile(""+req.body.picturePath, metadata, pushedRef.key);
 }
 
 /*
