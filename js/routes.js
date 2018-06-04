@@ -35,21 +35,24 @@ function createRoutes (router) {
     router.route('/reviews')
         .post(reviews.getReview);
 
-        //Alerts requests
+    router.route('/transactions')
+        .get(transactions.getTransactions);
+    router.route('/transactions/:id')
+        .get(transactions.getSingleTransaction);
+
+    // Other backend entry points
+    router.post('/renterinterested', transactions.renterInterested);
+    router.post('/selectrenter', transactions.selectRenter);
+    router.post('/renterconfirm', transactions.renterConfirm);
+    router.post('/renterclose', transactions.renterClose);
+    router.post('/ownerclose', transactions.ownerClose);
+
+
+       //Alerts requests
     router.route('/alerts/:id')
         .get(alerts.getAlert)
         .post(alerts.postAlert)
         .patch(alerts.setAlertToRead);
-
-        //Transactions requests
-    router.route('/transactions/:id')
-        .get(transactions.getSingleTransaction)
-        .patch(transactions.updateTransaction)
-        .delete(transactions.deleteTransaction);
-    router.route('/transactions/')
-        .get(transactions.getTransactions)
-        .post(transactions.newTransaction)
-        .delete(transactions.selectRenter);
 
         // Test routing
     // Go to localhost:3000/test
@@ -70,14 +73,17 @@ function createRoutes (router) {
         .delete(listings.deleteListing);
     router.route('/test/listings')
         .get(listings.getAllListings)
-        .post(listings.newListing)
+        .post(listings.newListing);
     router.route('/test/reviews')
         .post(reviews.newReview);
-    router.route('/test/transactions')
-        .post(transactions.newTransaction)
-        .get(transactions.getTransactions);
-    router.route('/test/reviews')
-        .post(reviews.newReview);
+
+    // Other backend entry points
+    router.post('/test/renterinterested', transactions.renterInterested);
+    router.post('/test/selectrenter', transactions.selectRenter);
+    router.post('/test/renterconfirm', transactions.renterConfirm);
+    router.post('/test/renterclose', transactions.renterClose);
+    router.post('/test/ownerclose', transactions.ownerClose);
+
 }
 
 module.exports = {createRoutes};
