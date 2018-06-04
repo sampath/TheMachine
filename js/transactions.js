@@ -45,6 +45,8 @@ function getTransactions(req, res) {
     if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
         queryRef.once("value", function(snapshot) {
+            console.log(snapshot.val());
+            console.log(snapshot.exists());
             if(snapshot.exists()) {
                 res.json(false);
             } else {
