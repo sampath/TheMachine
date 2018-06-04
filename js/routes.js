@@ -37,7 +37,6 @@ function createRoutes (router) {
 
     router.route('/transactions/:id')
         .get(transactions.getSingleTransaction)
-        .delete(transactions._deleteTransaction);
 
     // Other backend entry points
     router.post('/renterinterested', transactions.renterInterested);
