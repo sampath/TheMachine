@@ -30,7 +30,7 @@ function getAlert(req, res) {
 
 function postAlert(req, res){
     //Pushes the alert to the database
-    alertsRef.push({
+    alertsRef.child(req.params.id).push({
       content : req.body.content,
       time : Date.now(),
       read : false,
