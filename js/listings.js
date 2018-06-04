@@ -108,7 +108,6 @@ function updateListing(req, res) {
     listingsRef.child(id).once("value", snapshot => {
         var listing = snapshot.val();
         for (property in req.body) {
-            console.log(req.body[property] + " " + property);
             if (req.body[property] != '') {
                 listing[property] = req.body[property];
             }
@@ -130,8 +129,6 @@ function deleteListing(req, res) {
     listingsRef.child(id).remove(err => {
         if(err) {
             res.send(err);
-        } else {
-            res.json();
         }
     });
 }

@@ -39,16 +39,21 @@ function newUser(req, res) {
 
 function updateUser(req, res) {
     let id = req.params.id;
-    let user = {};
-    req.body.forEach((key, val) => {
-        user[key] = val;
-    });
-    usersRef.child(id).update(user, function(err) {
-        if(err) {
-            res.send(err)
+    usersRef.child(id).once("value", snapshot => {
+        var user = snapshot.val();
+        for (property in req.body) {
+            if (req.body[property] != '') {
+                user[property] = req.body[property];
+            }
         }
+        usersRef.child(id).update(user, err => {
+            if(err) {
+                res.send(err);
+            } else {
+                res.send("Successfully Updated")
+            }
+        });
     });
-    res.json();
 }
 
 function deleteUser(req, res) {
