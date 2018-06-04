@@ -35,8 +35,10 @@ function createRoutes (router) {
     router.route('/reviews')
         .post(reviews.getReview);
 
+    router.route('/transactions')
+        .get(transactions.getTransactions);
     router.route('/transactions/:id')
-        .get(transactions.getSingleTransaction)
+        .get(transactions.getSingleTransaction);
 
     // Other backend entry points
     router.post('/renterinterested', transactions.renterInterested);
