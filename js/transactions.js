@@ -209,7 +209,11 @@ function getUserTransactions(req, res){
             // renterArray = snapshot2.val();
             // for(var i = 0; i < ownerArray.length; i++) {
             //     renterArray += ownerArray[i];
+<<<<<<< HEAD
+                
+=======
 
+>>>>>>> 503d680978ede074eccb1e5f4ad93fa5382bed03
             // }
             // //console.log(ownerArray[0]);
             // res.json(renterArray);
