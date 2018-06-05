@@ -14,19 +14,25 @@ function getSingleTransaction(req, res) {
 
 //TODO pass in listing + userID, check if there is a transaction under that name
 // Query strings:
-// ?check=&listingID=&closed=
+// ?check=&listingID=&renterID=&closed=
 function getTransactions(req, res) {
 
     let queryRef = null;
     // try transactionsref for each loop and then go through, check each child, and then try and add that to array, if the array size is empty, then return true, if it isn't then return false
     if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-        console.log(queryRef.isEqual(null));
-        if(queryRef.isEqual(null)) {
-            res.json(false);
-        } else {
-            res.json(true);
-        }
+        var transactionsArray = [];
+        queryRef.once("value", function(snapshot) {
+            snapshot.forEach(function(item) {
+                transactionsArray.push(item);
+            });
+            if(transactionsArray.length <= 0) {
+                res.json(false);
+            } else {
+                res.json(true);
+            }
+        });
+
         // queryRef.once("value", function(snapshot) {
         //     console.log(snapshot.val());
         //     console.log(snapshot.exists());
@@ -203,7 +209,11 @@ function getUserTransactions(req, res){
             // renterArray = snapshot2.val();
             // for(var i = 0; i < ownerArray.length; i++) {
             //     renterArray += ownerArray[i];
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> 503d680978ede074eccb1e5f4ad93fa5382bed03
             // }
             // //console.log(ownerArray[0]);
             // res.json(renterArray);
