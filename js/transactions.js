@@ -209,7 +209,6 @@ function getUserTransactions(req, res){
             // renterArray = snapshot2.val();
             // for(var i = 0; i < ownerArray.length; i++) {
             //     renterArray += ownerArray[i];
-
             // }
             // //console.log(ownerArray[0]);
             // res.json(renterArray);
