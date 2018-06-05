@@ -26,7 +26,7 @@ function getTransactions(req, res) {
             snapshot.forEach(function(item) {
                 transactionsArray.push(item);
             });
-            if(transactionsArray.length == 0) {
+            if(transactionsArray.length <= 0) {
                 res.json(false);
             } else {
                 res.json(true);
