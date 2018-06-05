@@ -83,6 +83,8 @@ function createRoutes (router) {
         .post(listings.newListing);
     router.route('/test/reviews')
         .post(reviews.newReview);
+    router.route('/test/transactions')
+        .get(transactions.getTransactions);
 
     // Other backend entry points
     router.post('/test/renterinterested', transactions.renterInterested);
