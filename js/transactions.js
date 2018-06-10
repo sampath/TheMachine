@@ -12,6 +12,14 @@ function getSingleTransaction(req, res) {
     });
 }
 
+function getTransactionID(req, res) {
+    let queryRef = null;
+    queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
+    queryRef.once("value", function(snapshot) {
+        res.json(snapshot.getKey());
+    })
+}
+
 //TODO pass in listing + userID, check if there is a transaction under that name
 // Query strings:
 // ?check=&listingID=&renterID=&closed=
