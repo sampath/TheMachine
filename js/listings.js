@@ -16,20 +16,14 @@ function getListings(req, res) {
     }
     var maxPrice = req.query.maxPrice;
     var minPrice = req.query.minPrice;
-    console.log(req.query);
     var searchWords = req.query.searchWords.split(' ');
     // Search descriptions for keyword matches
     queryRef.once("value",(snapshot) => {
         let listingArray = snapshot.val();
-        console.log(Object.keys(listingArray));
         for(var i=0; i<Object.keys(listingArray).length; ++i) {
             let listing = listingArray[Object.keys(listingArray)[i]];
-            console.log(listing.description);
             let wordsToSearch = listing['description'].split(' ');
             if (!wordsToSearch.some(t => searchWords.includes(t)) || listing['price'] < minPrice || listing['price'] > maxPrice) {
-                console.log("fuck javascript, fuck webdev, fuck packets, fuck localhost, fuck gary, fuck servers, fuck firebase, fuck rest requests, fuck fuck fuck.")
-                console.log(listing.description);
-                console.log(Object.keys(listingArray)[i]);
                 delete listingArray[Object.keys(listingArray)[i]];
                 i--;
             }
