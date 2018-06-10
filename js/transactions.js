@@ -16,10 +16,11 @@ function getSingleTransaction(req, res) {
 // Query strings:
 // ?listingID=&renterID=&closed=
 function getTransactionID(req, res) {
-    let queryRef = null;
-    queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-    queryRef.once("value", function(snapshot) {
-        res.json(snapshot.getKey());
+    let query = req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed;
+     transactionsRef.orderByChild('listingID_renterID_closed').equalTo(query+"").once("value", function(snapshot) {
+         snapshot.forEach(function(item) {
+             res.json(item.key);
+         });
     })
 }
 
