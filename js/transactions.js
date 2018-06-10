@@ -95,6 +95,8 @@ function renterInterested(req, res) {
             exists = true;
         });
 
+        console.log("Exists: " + exists);
+
         if (!exists) {
             transactionsRef.push({
                 listingID: req.body.listingID,
