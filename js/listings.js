@@ -22,8 +22,9 @@ function getListings(req, res) {
         let listingArray = snapshot.val();
         for(var i=0; i<Object.keys(listingArray).length; ++i) {
             let listing = listingArray[Object.keys(listingArray)[i]];
-            let wordsToSearch = listing['description'].split(' ');
-            if (!wordsToSearch.some(t => searchWords.includes(t)) || listing['price'] < minPrice || listing['price'] > maxPrice) {
+            let wordsToSearch = listing['description'] + ' ' + listing['itemName'];
+            wordsToSearch = wordsToSearch.toLowerCase().split(' ');
+            if (!wordsToSearch.some(t => searchWords.includes(t.toLowerCase())) || listing['price'] < minPrice || listing['price'] > maxPrice) {
                 delete listingArray[Object.keys(listingArray)[i]];
                 i--;
             }
