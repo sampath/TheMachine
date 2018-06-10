@@ -151,6 +151,15 @@ function _deleteTransaction(transactionID, res) {
     });
 }
 
+function deleteTransactionEntry(req, res){
+    let id = req.params.id;
+    transactionsRef.child(id).remove(function(err) {
+        if(err) {
+            res.send(err);
+        }
+    });
+}
+
 /*
  *  req {
  *      body {
@@ -260,4 +269,7 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+function getInterested(req, res) {
+
+}
+module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose, getInterested, deleteTransactionEntry};
