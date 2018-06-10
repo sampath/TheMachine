@@ -171,13 +171,21 @@ function updateListing(req, res) {
 }
 
 function deleteListing(req, res) {
-    console.log("in delete function");
-    console.log("printing req.params.id: " + req.params.id);
     let id = req.params.id;
     listingsRef.child(id).remove(err => {
         if(err) {
             res.send(err);
         }
+    });
+
+   // Delete all related transactions
+    var transactionsRef = server.db.ref("transactions");
+    let queryRef = null;
+    queryRef = transactionsRef.orderByChild("listingID").equalTo(id);
+    queryRef.once("value", snapshot => {
+        snapshot.forEach(function(item) {
+            item.ref.remove();//snapshot.ref.remove();
+        });
     });
 }
 
