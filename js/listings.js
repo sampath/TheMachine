@@ -1,6 +1,7 @@
 //import db from "../server.js"
 var server = require('./db.js');
 var listingsRef = server.db.ref("listings");
+var stream = require("stream");
 
 function getAllListings(req, res){
     listingsRef.once("value", (snapshot, prevChildKey) => {
@@ -32,6 +33,19 @@ function getListings(req, res) {
         res.json(listingArray);
     });
 }
+
+function getKeyword(req, res){
+  let id = req.params.id;
+  listingsRef.orderByChild('itemName').equalTo(id+"").on("value", function(snapshot){
+      if(snapshot.val==null){
+        res.send("No object found");
+      } else {
+        res.json(snapshot.val());
+      }
+  });
+}
+
+
 
 function getListing(req, res) {
     let id = req.params.id;
@@ -71,6 +85,42 @@ function uploadFile(file, metadata, id) {
     })
 }
 
+/*Function uploads a picture to the storage*/
+function uploadPicture(base64, postId, uid, err) {
+  if(!err){
+    let bufferStream = new stream.PassThrough();
+    bufferStream.end(new Buffer.from(base64, 'base64'));
+
+    // Retrieve default storage bucket
+    let bucket = server.bucket;
+
+    // Create a reference to the new image file
+    let file = bucket.file(`/images/${uid}_${postId}.jpg`);
+
+    bufferStream.pipe(file.createWriteStream({
+      metadata: {
+        contentType: 'image/jpeg'
+      }
+    }))
+    .on('error', error => {
+      reject(`news.provider#uploadPicture - Error while uploading picture ${JSON.stringify(error)}`);
+    })
+    .on('finish', (uploadedFile) => {
+      // The file upload is complete.
+      //Adding the URL to the database
+       file.getSignedUrl({
+          action: 'read',
+          expires: '03-17-2025'
+        }).then(signedUrls => {
+          listingsRef.child(uid).child('pictureURL').set(signedUrls[0]);
+        });
+
+    });
+    } else {//}
+      console.log(err);
+    }
+};
+
 function newListing(req, res) {
 
     var metadata = {
@@ -85,7 +135,7 @@ function newListing(req, res) {
         availability: 1,
         description: req.body.description,
         // endTime: '?',
-        pictureURL: req.body.pictureURL,
+        pictureURL: '?',
         avgRating: 0.0,
         numListingRatings: 0
 
@@ -94,8 +144,7 @@ function newListing(req, res) {
             res.send(err)
         }
     });
-
-    uploadFile(""+req.body.pictureURL, metadata, pushedRef.key);
+    uploadPicture(req.body.picturePath+"",req.body.itemName+"",pushedRef.key);
 }
 
 /*
@@ -133,4 +182,16 @@ function deleteListing(req, res) {
     });
 }
 
-module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings};
+function getUserListings(req,res){
+    let id = req.params.id;
+    let queryRef = listingsRef.orderByChild("ownerID").equalTo(id);
+
+    var listingsArray = [];
+
+    queryRef.once("value").then(function(snapshot) {
+        listingsArray = snapshot.val()
+        res.json(listingsArray);
+    });
+}
+
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings, getUserListings, getKeyword};

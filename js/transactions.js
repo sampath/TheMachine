@@ -14,18 +14,40 @@ function getSingleTransaction(req, res) {
 
 //TODO pass in listing + userID, check if there is a transaction under that name
 // Query strings:
-// ?check=&listingID=&closed=
+// ?check=&listingID=&renterID=&closed=
 function getTransactions(req, res) {
 
     let queryRef = null;
 
-    if(req.query.check) {
+    // try transactionsref for each loop and then go through, check each child, and then try and add that to array, if the array size is empty, then return true, if it isn't then return false
+    if(req.query.check == 'true') {
         queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
-        if(queryRef == null) {
-            res.json(false);
-        } else {
-            res.json(true);
-        }
+        var transactionsArray = [];
+        queryRef.once("value", function(snapshot) {
+            snapshot.forEach(function(item) {
+                transactionsArray.push(item);
+            });
+            if(transactionsArray.length <= 0) {
+                res.json(false);
+            } else {
+                res.json(true);
+            }
+        });
+
+        // queryRef.once("value", function(snapshot) {
+        //     console.log(snapshot.val());
+        //     console.log(snapshot.exists());
+            // if(snapshot.exists()) {
+            //     res.json(false);
+            // } else {
+            //     res.json(true);
+            // }
+        // });
+        // if(queryRef == null) {
+        //     res.json(false);
+        // } else {
+        //     res.json(true);
+        // }
     } else {
         queryRef = transactionsRef.orderByChild("listingID_closed").equalTo(req.query.listingID + "_" + req.query.closed);
 
@@ -165,6 +187,36 @@ function renterClose(req, res) {
     });
 }
 
+function getUserTransactions(req, res){
+    let id = req.params.id;
+    let ownerQuery = transactionsRef.orderByChild("ownerID").equalTo(id);
+    let renterQuery = transactionsRef.orderByChild("renterID").equalTo(id);
+
+    var transactionsArray = "";
+
+    ownerQuery.once("value").then(function(snapshot) {
+      //  transactionsArray = new Array(snapshot.val())
+        let ownerArray = [];
+        snapshot.forEach(function(item) {
+            ownerArray.push(item);
+        });
+        renterQuery.once("value").then(function(snapshot2) {
+            snapshot2.forEach(function(item2){
+                ownerArray.push(item2);
+            });
+
+            res.json(ownerArray);
+            // let renterArray = [];
+            // renterArray = snapshot2.val();
+            // for(var i = 0; i < ownerArray.length; i++) {
+            //     renterArray += ownerArray[i];
+            // }
+            // //console.log(ownerArray[0]);
+            // res.json(renterArray);
+        });
+    });
+}
+
 /*
  *  req {
  *      body {
@@ -196,4 +248,4 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+module.exports = {getUserTransactions, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
