@@ -185,12 +185,8 @@ function deleteListing(req, res) {
     queryRef.once("value", snapshot => {
         snapshot.forEach(function(item) {
             item.ref.remove();//snapshot.ref.remove();
-            console.log(item.ref);
         });
     });
-    
-    console.log(queryRef.ref);
-    //queryRef.ref.remove();
 }
 
 function getUserListings(req,res){
