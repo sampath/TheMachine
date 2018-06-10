@@ -270,6 +270,19 @@ function ownerClose(req, res) {
 }
 
 function getInterested(req, res) {
-
+    let queryRef = null;
+    queryRef = transactionsRef.orderByChild("renterID").equalTo(req.params.id);
+    var transactionsArray = [];
+    queryRef.once("value", function(snapshot) {
+        snapshot.forEach(function(item) {
+            var renterConfirmed = item.child("renterConfirmed").val();
+            var ownerConfirmed = item.child("ownerConfirmed").val();
+            console.log("RC: " + renterConfirmed + " OC: "+ownerConfirmed);
+            if(renterConfirmed && !ownerConfirmed){
+                transactionsArray.push(item);
+            }
+        });
+        res.json(transactionsArray);
+    });
 }
 module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose, getInterested, deleteTransactionEntry};
