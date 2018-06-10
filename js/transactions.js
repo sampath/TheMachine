@@ -272,17 +272,31 @@ function ownerClose(req, res) {
 function getInterested(req, res) {
     let queryRef = null;
     queryRef = transactionsRef.orderByChild("renterID").equalTo(req.params.id);
-    var transactionsArray = [];
+    var listingsArray = [];
     queryRef.once("value", function(snapshot) {
+        var numChildren = snapshot.numChildren(),
+            i = 0;
+        
         snapshot.forEach(function(item) {
             var renterConfirmed = item.child("renterConfirmed").val();
             var ownerConfirmed = item.child("ownerConfirmed").val();
-            console.log("RC: " + renterConfirmed + " OC: "+ownerConfirmed);
             if(renterConfirmed && !ownerConfirmed){
-                transactionsArray.push(item);
+                var listingID = item.child("listingID").val();
+                // Get reference to that listing
+                let listingRef = database.db.ref("listings").child(listingID);
+            
+                listingRef.once("value", snapshot2 => {
+                    i++;
+                    listingsArray.push(snapshot2.val());
+                    
+                    if (i == numChildren) {
+                        res.send(listingsArray);
+                    }
+                });
+            }else{
+                i++;
             }
         });
-        res.json(transactionsArray);
     });
 }
 module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose, getInterested, deleteTransactionEntry};
