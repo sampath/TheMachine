@@ -16,12 +16,12 @@ function getListings(req, res) {
     }
     var maxPrice = req.query.maxPrice;
     var minPrice = req.query.minPrice;
-    var searchWords = req.query.searchWords.split(' ');
+    var searchWords = req.query.searchWords.toLowerCase().split(' ');
+
     // Search descriptions for keyword matches
     queryRef.once("value",(snapshot) => {
         let listingArray = snapshot.val();
-        let listingsLength = Object.keys(listingArray).length;
-        for(var i=0; i<listingsLength; ) {
+        for(var i=0; i<Object.keys(listingArray).length; ) {
             let listing = listingArray[Object.keys(listingArray)[i]];
             let wordsToSearch = listing['description'] + ' ' + listing['itemName'];
             wordsToSearch = wordsToSearch.toLowerCase().split(' ');
