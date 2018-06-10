@@ -51,7 +51,11 @@ function createRoutes (router) {
     router.route('/transactions/transactionID/')
         .get(transactions.getTransactionID);
     router.route('/transactions/:id')
-        .get(transactions.getSingleTransaction);
+        .get(transactions.getSingleTransaction)
+        .delete(transactions.deleteTransactionEntry);
+
+    router.route('/transactions/interested/:id')
+        .get(transactions.getInterested);
 
     // Other backend entry points
     router.post('/renterinterested', transactions.renterInterested);
