@@ -151,6 +151,15 @@ function _deleteTransaction(transactionID, res) {
     });
 }
 
+function deleteTransactionEntry(req, res){
+    let id = req.params.id;
+    transactionsRef.child(id).remove(function(err) {
+        if(err) {
+            res.send(err);
+        }
+    });
+}
+
 /*
  *  req {
  *      body {
@@ -260,4 +269,20 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+function getInterested(req, res) {
+    let queryRef = null;
+    queryRef = transactionsRef.orderByChild("renterID").equalTo(req.params.id);
+    var transactionsArray = [];
+    queryRef.once("value", function(snapshot) {
+        snapshot.forEach(function(item) {
+            var renterConfirmed = item.child("renterConfirmed").val();
+            var ownerConfirmed = item.child("ownerConfirmed").val();
+            console.log("RC: " + renterConfirmed + " OC: "+ownerConfirmed);
+            if(renterConfirmed && !ownerConfirmed){
+                transactionsArray.push(item);
+            }
+        });
+        res.json(transactionsArray);
+    });
+}
+module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose, getInterested, deleteTransactionEntry};
