@@ -300,7 +300,9 @@ function getInterested(req, res) {
             
                 listingRef.once("value", snapshot2 => {
                     i++;
-                    listingsArray.push(snapshot2.val());
+                    var obj ={};
+                    obj[listingID] = snapshot2.val();
+                    listingsArray.push(obj);
                     
                     if (i == numChildren) {
                         res.send(listingsArray);
