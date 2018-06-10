@@ -31,6 +31,9 @@ function createRoutes (router) {
     router.route('/listings/user/:id')
         .get(listings.getUserListings);
 
+    router.route('/listings/keyword/:id')
+        .get(listings.getKeyword);
+
     // Reviews requests
     router.route('/reviews/:id')
         .get(reviews.getReview);
