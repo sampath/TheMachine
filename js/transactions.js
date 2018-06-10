@@ -12,6 +12,9 @@ function getSingleTransaction(req, res) {
     });
 }
 
+//should call getTransactions first in order to check if actually exists or not
+// Query strings:
+// ?listingID=&renterID=&closed=
 function getTransactionID(req, res) {
     let queryRef = null;
     queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
