@@ -20,13 +20,15 @@ function getListings(req, res) {
     // Search descriptions for keyword matches
     queryRef.once("value",(snapshot) => {
         let listingArray = snapshot.val();
-        for(var i=0; i<Object.keys(listingArray).length; ++i) {
+        let listingsLength = Object.keys(listingArray).length;
+        for(var i=0; i<listingArray; ) {
             let listing = listingArray[Object.keys(listingArray)[i]];
             let wordsToSearch = listing['description'] + ' ' + listing['itemName'];
             wordsToSearch = wordsToSearch.toLowerCase().split(' ');
             if (!wordsToSearch.some(t => searchWords.includes(t.toLowerCase())) || listing['price'] < minPrice || listing['price'] > maxPrice) {
                 delete listingArray[Object.keys(listingArray)[i]];
-                i--;
+            } else {
+                i++;
             }
         }
         res.json(listingArray);
