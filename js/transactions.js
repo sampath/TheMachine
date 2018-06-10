@@ -258,4 +258,4 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getUserTransactions, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
