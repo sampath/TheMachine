@@ -7,7 +7,9 @@ function getAlerts(req, res){
     let id = req.params.id;
     alertsRef.child(id).once("value", snapshot => {
         if(snapshot.val() == null) {
-            res.send("User id error");
+            res.send({
+                error: 2
+            });
         } else {
             res.json(snapshot.val())
         }
