@@ -34,6 +34,19 @@ function getListings(req, res) {
     });
 }
 
+function getKeyword(req, res){
+  let id = req.params.id;
+  listingsRef.orderByChild('itemName').equalTo(id+"").on("value", function(snapshot){
+      if(snapshot.val==null){
+        res.send("No object found");
+      } else {
+        res.json(snapshot.val());
+      }
+  });
+}
+
+
+
 function getListing(req, res) {
     let id = req.params.id;
     listingsRef.child(id).once("value", snapshot => {
@@ -171,4 +184,4 @@ function deleteListing(req, res) {
     });
 }
 
-module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings};
+module.exports = {getListings, getListing, newListing, updateListing, deleteListing, getAllListings, getKeyword};

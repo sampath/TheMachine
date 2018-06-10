@@ -29,6 +29,9 @@ function createRoutes (router) {
         .patch(listings.updateListing)
         .delete(listings.deleteListing);
 
+    router.route('/listings/keyword/:id')
+        .get(listings.getKeyword);
+
     // Reviews requests
     router.route('/reviews/:id')
         .get(reviews.getReview);
