@@ -62,6 +62,7 @@ function createRoutes (router) {
         .get(alerts.getAlerts)
         .post(alerts.postAlert);
 
+
     router.route('/alerts/user/:userID/single/:alertID')
         .patch(alerts.setAlertToRead)
         .get(alerts.getAlert);
