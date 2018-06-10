@@ -93,7 +93,6 @@ function renterInterested(req, res) {
         let exists = false;
         snapshot.forEach(function(item) {
             exists = true;
-            break;
         });
 
         if (!exists) {
