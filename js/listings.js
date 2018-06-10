@@ -21,7 +21,7 @@ function getListings(req, res) {
     queryRef.once("value",(snapshot) => {
         let listingArray = snapshot.val();
         let listingsLength = Object.keys(listingArray).length;
-        for(var i=0; i<listingArray; ) {
+        for(var i=0; i<listingsLength; ) {
             let listing = listingArray[Object.keys(listingArray)[i]];
             let wordsToSearch = listing['description'] + ' ' + listing['itemName'];
             wordsToSearch = wordsToSearch.toLowerCase().split(' ');
