@@ -28,6 +28,8 @@ function createRoutes (router) {
         .get(listings.getListing)
         .patch(listings.updateListing)
         .delete(listings.deleteListing);
+    router.route('/listings/user/:id')
+        .get(listings.getUserListings);
 
     router.route('/listings/keyword/:id')
         .get(listings.getKeyword);
@@ -42,6 +44,8 @@ function createRoutes (router) {
         .get(transactions.getTransactions);
     router.route('/transactions/:id')
         .get(transactions.getSingleTransaction);
+    router.route('/transactions/user/:id')
+        .get(transactions.getUserTransactions);
 
     // Other backend entry points
     router.post('/renterinterested', transactions.renterInterested);
@@ -53,9 +57,12 @@ function createRoutes (router) {
 
        //Alerts requests
     router.route('/alerts/:id')
-        .get(alerts.getAlert)
-        .post(alerts.postAlert)
-        .patch(alerts.setAlertToRead);
+        .get(alerts.getAlerts)
+        .post(alerts.postAlert);
+
+    router.route('/alerts/user/:userID/single/:alertID')
+        .patch(alerts.setAlertToRead)
+        .get(alerts.getAlert);
 
         // Test routing
     // Go to localhost:3000/test
@@ -79,6 +86,8 @@ function createRoutes (router) {
         .post(listings.newListing);
     router.route('/test/reviews')
         .post(reviews.newReview);
+    router.route('/test/transactions')
+        .get(transactions.getTransactions);
 
     // Other backend entry points
     router.post('/test/renterinterested', transactions.renterInterested);
