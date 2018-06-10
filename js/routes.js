@@ -21,8 +21,12 @@ function createRoutes (router) {
 
     // Listing requests
     router.route('/listings')
-        .get(listings.getListings)
-        .post(listings.newListing)
+        .get(listings.getAllListings)
+        .post(listings.newListing);
+
+    // Search listings
+    router.route('/listings/filter')
+        .get(listings.getListings);
 
     router.route('/listings/:id')
         .get(listings.getListing)
