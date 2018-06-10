@@ -285,7 +285,7 @@ function ownerClose(req, res) {
 function getInterested(req, res) {
     let queryRef = null;
     queryRef = transactionsRef.orderByChild("renterID").equalTo(req.params.id);
-    var listingsArray = [];
+    var listingsArray = {};
     queryRef.once("value", function(snapshot) {
         var numChildren = snapshot.numChildren(),
             i = 0;
@@ -300,9 +300,7 @@ function getInterested(req, res) {
             
                 listingRef.once("value", snapshot2 => {
                     i++;
-                    var obj ={};
-                    obj[listingID] = snapshot2.val();
-                    listingsArray.push(obj);
+                    listingsArray[listingID] = snapshot2.val();
                     
                     if (i == numChildren) {
                         res.send(listingsArray);
