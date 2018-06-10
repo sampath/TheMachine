@@ -50,7 +50,7 @@ function createRoutes (router) {
         .get(transactions.getSingleTransaction)
         .delete(transactions.deleteTransactionEntry);
 
-    router.route('/transactions/user/:id')
+    router.route('/transactions/interested/:id')
         .get(transactions.getInterested);
 
     // Other backend entry points
