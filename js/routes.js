@@ -46,7 +46,7 @@ function createRoutes (router) {
         .get(transactions.getSingleTransaction);
     router.route('/transactions/user/:id')
         .get(transactions.getUserTransactions);
-    router.route('/transactions/id/')
+    router.route('/transactions/transactionID/')
         .get(transactions.getTransactionID);
 
     // Other backend entry points
