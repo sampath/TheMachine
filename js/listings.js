@@ -4,32 +4,36 @@ var listingsRef = server.db.ref("listings");
 var stream = require("stream");
 
 function getAllListings(req, res){
-    listingsRef.once("value", (snapshot, prevChildKey) => {
+    listingsRef.once("value", (snapshot) => {
         res.json(snapshot.val())
     });
 }
 
 function getListings(req, res) {
-    let queryRef = listingsRef.orderByChild(req.query.orderBy); // add default key to order by
+    var queryRef = listingsRef.orderByChild('availability');
     if (req.query.onlyAvailable) {
-        queryRef = queryRef.equalTo(1, 'availability')
+        queryRef = queryRef.equalTo(1);
     }
+    var maxPrice = req.query.maxPrice;
+    var minPrice = req.query.minPrice;
+    console.log(req.query);
+    var searchWords = req.query.searchWords.split(' ');
     // Search descriptions for keyword matches
-    queryRef.once("value",(snapshot, prevChildKey) => {
-        let index = 0;
+    queryRef.once("value",(snapshot) => {
         let listingArray = snapshot.val();
-        snapshot.val().forEach(listing => {
-            // if we want to search tags
-            //let wordsToSearch = listing.child('tags')
-            let wordsToSearch = listing.child('description').split(' ');
-            wordsToSearch[wordsToSearch.length - 1] = wordsToSearch[description.length - 1].split('.')[0];
-            if (!wordsToSearch.some(t => req.query.searchWords.includes(t))) {
-                listingArray = listingArray.splice(index, 1);
-                index--;
+        console.log(Object.keys(listingArray));
+        for(var i=0; i<Object.keys(listingArray).length; ++i) {
+            let listing = listingArray[Object.keys(listingArray)[i]];
+            console.log(listing.description);
+            let wordsToSearch = listing['description'].split(' ');
+            if (!wordsToSearch.some(t => searchWords.includes(t)) || listing['price'] < minPrice || listing['price'] > maxPrice) {
+                console.log("fuck javascript, fuck webdev, fuck packets, fuck localhost, fuck gary, fuck servers, fuck firebase, fuck rest requests, fuck fuck fuck.")
+                console.log(listing.description);
+                console.log(Object.keys(listingArray)[i]);
+                delete listingArray[Object.keys(listingArray)[i]];
+                i--;
             }
-
-            index++;
-        });
+        }
         res.json(listingArray);
     });
 }
@@ -44,8 +48,6 @@ function getKeyword(req, res){
       }
   });
 }
-
-
 
 function getListing(req, res) {
     let id = req.params.id;
@@ -189,7 +191,7 @@ function getUserListings(req,res){
     var listingsArray = [];
 
     queryRef.once("value").then(function(snapshot) {
-        listingsArray = snapshot.val()
+        listingsArray = snapshot.val();
         res.json(listingsArray);
     });
 }
