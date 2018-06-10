@@ -121,27 +121,6 @@ function renterInterested(req, res) {
             res.send({error: "Renter has already expressed interest"});
         }
     });
-
-    transactionsRef.push({
-        listingID: req.body.listingID,
-        ownerID: req.body.ownerID, //user id of the owner,
-        renterID: req.body.renterID, //current user,
-        price: req.body.price,
-        startTime: Date.now(),
-        endTime: Date.now(),
-        ownerConfirmed: false,
-        renterConfirmed: true,
-        ownerClosed: false,
-        renterClosed: false,
-        closed: false,
-        listingID_closed: req.body.listingID + "_" + false,
-        listingID_renterID_closed: req.body.listingID + "_" + req.body.renterID + "_" + false
-
-    }, function(err) {
-        if(err){
-            res.send(err)
-        }
-    });
 }
 
 /*
