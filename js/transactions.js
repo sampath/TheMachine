@@ -88,6 +88,39 @@ function getTransactions(req, res) {
  *  }
  */
 function renterInterested(req, res) {
+    let queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.body.listingID + "_" + req.body.renterID + "_false");
+    queryRef.once("value", function(snapshot) {
+        let exists = false;
+        snapshot.forEach(function(item) {
+            exists = true;
+            break;
+        });
+
+        if (!exists) {
+            transactionsRef.push({
+                listingID: req.body.listingID,
+                ownerID: req.body.ownerID, //user id of the owner,
+                renterID: req.body.renterID, //current user,
+                price: req.body.price,
+                startTime: Date.now(),
+                endTime: Date.now(),
+                ownerConfirmed: false,
+                renterConfirmed: true,
+                ownerClosed: false,
+                renterClosed: false,
+                closed: false,
+                listingID_closed: req.body.listingID + "_" + false,
+                listingID_renterID_closed: req.body.listingID + "_" + req.body.renterID + "_" + false
+
+            }, function(err) {
+                if(err){
+                    res.send(err)
+                }
+            });
+        } else {
+            res.send({error: "Renter has already expressed interest"});
+        }
+    });
 
     transactionsRef.push({
         listingID: req.body.listingID,
