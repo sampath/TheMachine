@@ -21,7 +21,7 @@ function createRoutes (router) {
 
     // Listing requests
     router.route('/listings')
-        .get(listings.getAllListings)
+        .get(listings.getListings)
         .post(listings.newListing)
 
     router.route('/listings/:id')
