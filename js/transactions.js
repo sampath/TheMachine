@@ -12,6 +12,17 @@ function getSingleTransaction(req, res) {
     });
 }
 
+//should call getTransactions first in order to check if actually exists or not
+// Query strings:
+// ?listingID=&renterID=&closed=
+function getTransactionID(req, res) {
+    let queryRef = null;
+    queryRef = transactionsRef.orderByChild("listingID_renterID_closed").equalTo(req.query.listingID + "_" + req.query.renterID + "_" + req.query.closed);
+    queryRef.once("value", function(snapshot) {
+        res.json(snapshot.getKey());
+    })
+}
+
 //TODO pass in listing + userID, check if there is a transaction under that name
 // Query strings:
 // ?check=&listingID=&renterID=&closed=
@@ -247,4 +258,4 @@ function ownerClose(req, res) {
     });
 }
 
-module.exports = {getUserTransactions, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
+module.exports = {getUserTransactions, getTransactionID, getTransactions, getSingleTransaction, renterInterested, selectRenter, renterConfirm, renterClose, ownerClose};
